@@ -121,27 +121,61 @@ const ServicePage = () => {
       {/* --- LIGHTBOX OVERLAY --- */}
       {selectedIndex !== null && (
         <div 
-          className="fixed inset-0 z-[100] flex items-center justify-center bg-black/95 backdrop-blur-sm p-4"
+          className="fixed inset-0 z-[100] flex items-center justify-center bg-white/60 backdrop-blur-2xl p-4 transition-all duration-300"
           onClick={() => setSelectedIndex(null)}
         >
-          <button className="absolute top-10 right-10 text-white/50 hover:text-white transition" onClick={() => setSelectedIndex(null)}>
-            <X size={48} />
+          {/* Close Button - Moved and styled for a cleaner look */}
+          <button 
+            className="absolute top-8 right-8 text-gray-900/40 hover:text-gray-900 transition-colors" 
+            onClick={() => setSelectedIndex(null)}
+          >
+            <X size={32} />
           </button>
-          <button className="absolute left-6 text-white hover:scale-110 transition" onClick={prevImg}>
-            <ChevronLeft size={50} strokeWidth={1.5} />
+
+          {/* Navigation Arrows - Using a darker, more refined look */}
+          <button 
+            className="absolute left-4 md:left-10 text-gray-900/20 hover:text-blue-600 hover:scale-110 transition-all p-2" 
+            onClick={prevImg}
+          >
+            <ChevronLeft size={48} strokeWidth={1} />
           </button>
-          <button className="absolute right-6 text-white hover:scale-110 transition" onClick={nextImg}>
-            <ChevronRight size={50} strokeWidth={1.5} />
+          
+          <button 
+            className="absolute right-4 md:right-10 text-gray-900/20 hover:text-blue-600 hover:scale-110 transition-all p-2" 
+            onClick={nextImg}
+          >
+            <ChevronRight size={48} strokeWidth={1} />
           </button>
-          <div className="max-w-5xl w-full flex flex-col items-center" onClick={(e) => e.stopPropagation()}>
-            <img 
-              src={galleryItems[selectedIndex].img} 
-              className="max-h-[75vh] w-auto rounded-lg shadow-2xl" 
-              alt="Expanded"
-            />
-            <div className="mt-8 text-center text-white">
-              <h3 className="text-3xl font-bold">{galleryItems[selectedIndex].title}</h3>
-              <p className="text-gray-400 mt-2 text-lg">{galleryItems[selectedIndex].category}</p>
+
+          <div 
+            className="max-w-5xl w-full flex flex-col items-center animate-in fade-in zoom-in duration-300" 
+            onClick={(e) => e.stopPropagation()}
+          >
+            <div className="relative group">
+              <img 
+                src={galleryItems[selectedIndex].img} 
+                className="max-h-[70vh] w-auto rounded-2xl shadow-[0_20px_50px_rgba(0,0,0,0.1)] border border-white/50" 
+                alt="Expanded"
+              />
+            </div>
+            
+            <div className="mt-6 text-center">
+              <span className="text-blue-600 text-sm font-bold uppercase tracking-widest">
+                {galleryItems[selectedIndex].category}
+              </span>
+              <h3 className="text-3xl font-bold text-gray-900 mt-1">
+                {galleryItems[selectedIndex].title}
+              </h3>
+              
+              {/* Pagination indicator for a modern touch */}
+              <div className="flex gap-2 justify-center mt-6">
+                {galleryItems.map((_, i) => (
+                  <div 
+                    key={i} 
+                    className={`h-1.5 transition-all duration-300 rounded-full ${i === selectedIndex ? 'w-8 bg-blue-600' : 'w-2 bg-gray-300'}`}
+                  />
+                ))}
+              </div>
             </div>
           </div>
         </div>
