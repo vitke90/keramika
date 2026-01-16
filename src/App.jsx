@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { X, ChevronLeft, ChevronRight, Globe, CheckCircle, MessageSquare, Maximize2, Menu } from 'lucide-react';
 import photo1 from './photos/photo1.jpg'
 import photo2 from './photos/photo2.jpg'
@@ -25,13 +25,28 @@ const ServicePage = () => {
     { id: 5, title: "Moderno Kupatilo", category: "Keramika", img: photo5 },
   ];
 
+  useEffect(() => {
+    const handleKeyDown = (e) => {
+      if (selectedIndex !== null) {
+        if (e.key === 'ArrowRight') setSelectedIndex((prev) => (prev + 1) % galleryItems.length);
+        if (e.key === 'ArrowLeft') setSelectedIndex((prev) => (prev - 1 + galleryItems.length) % galleryItems.length);
+        if (e.key === 'Escape') setSelectedIndex(null);
+      } else if (isFullGalleryOpen) {
+        if (e.key === 'Escape') setIsFullGalleryOpen(false);
+      }
+    };
+
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, [selectedIndex, isFullGalleryOpen]);
+
   const nextImg = (e) => {
-    e.stopPropagation();
+    e?.stopPropagation();
     setSelectedIndex((prev) => (prev + 1) % galleryItems.length);
   };
 
   const prevImg = (e) => {
-    e.stopPropagation();
+    e?.stopPropagation();
     setSelectedIndex((prev) => (prev - 1 + galleryItems.length) % galleryItems.length);
   };
 
