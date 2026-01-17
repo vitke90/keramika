@@ -9,6 +9,7 @@ import photo5 from './photos/photo5.jpg'
 const ServicePage = () => {
   const [selectedIndex, setSelectedIndex] = useState(null);
   const [isFullGalleryOpen, setIsFullGalleryOpen] = useState(false);
+  const [isMenuOpen, setIsMenuOpen] = useState(false); // Stanje za mobilni meni
 
   const services = [
     { title: "Postavljanje pločica", description: "Postavljamo pločice u kuhinjama, hodnicima, kupatilima.", icon: <Globe className="w-8 h-8 text-blue-600" /> },
@@ -26,9 +27,9 @@ const ServicePage = () => {
     { id: 5, title: "Moderno Kupatilo", category: "Keramika", img: photo5 },
   ];
 
-  // --- CINEMATIC SMOOTH SCROLL ---
   const scrollToSection = (e, id) => {
     e.preventDefault();
+    setIsMenuOpen(false); // Zatvori meni nakon klika na link
     const element = document.getElementById(id);
     if (!element) return;
 
@@ -64,6 +65,7 @@ const ServicePage = () => {
       } else if (isFullGalleryOpen) {
         if (e.key === 'Escape') setIsFullGalleryOpen(false);
       }
+      if (e.key === 'Escape') setIsMenuOpen(false);
     };
     window.addEventListener('keydown', handleKeyDown);
     return () => window.removeEventListener('keydown', handleKeyDown);
@@ -85,7 +87,6 @@ const ServicePage = () => {
       {/* --- HEADER / NAVIGATION --- */}
       <nav className="fixed top-0 w-full bg-white/80 backdrop-blur-md border-b border-gray-100 z-50">
         <div className="max-w-7xl mx-auto px-6 h-20 flex items-center justify-between">
-          {/* Logo */}
           <div className="flex items-center gap-2 cursor-pointer" onClick={() => window.scrollTo({top: 0, behavior: 'smooth'})}>
             <div className="w-10 h-10 bg-blue-600 rounded-lg flex items-center justify-center shrink-0">
               <span className="text-white font-bold text-xl">V</span>
@@ -93,27 +94,56 @@ const ServicePage = () => {
             <span className="text-lg md:text-xl font-bold tracking-tight text-gray-900 uppercase">Keramičar i Vodoinstalater</span>
           </div>
 
-          {/* Nav links + Mini Call Button */}
-          <div className="flex items-center gap-4 md:gap-8">
+          <div className="flex items-center gap-4">
+            {/* Desktop Links */}
             <div className="hidden md:flex items-center gap-8 font-medium text-gray-600">
-              <a href="#services" onClick={(e) => scrollToSection(e, 'services')} className="hover:text-blue-600 transition-colors duration-300">Usluge</a>
-              <a href="#projects" onClick={(e) => scrollToSection(e, 'projects')} className="hover:text-blue-600 transition-colors duration-300">Galerija</a>
-              <a href="#about" onClick={(e) => scrollToSection(e, 'about')} className="hover:text-blue-600 transition-colors duration-300">O nama</a>
+              <a href="#services" onClick={(e) => scrollToSection(e, 'services')} className="hover:text-blue-600 transition">Usluge</a>
+              <a href="#projects" onClick={(e) => scrollToSection(e, 'projects')} className="hover:text-blue-600 transition">Galerija</a>
+              <a href="#about" onClick={(e) => scrollToSection(e, 'about')} className="hover:text-blue-600 transition">O nama</a>
             </div>
             
-            {/* Top Menu Call Button */}
-            <a 
-              href="tel:0606160776"
-              className="flex items-center gap-2 bg-blue-600 text-white px-4 py-2.5 rounded-full font-bold text-sm hover:bg-blue-700 transition-all shadow-md shadow-blue-100"
-            >
+            <a href="tel:0606160776" className="flex items-center gap-2 bg-blue-600 text-white px-4 py-2 rounded-full font-bold text-sm shadow-md">
               <Phone size={16} fill="currentColor" />
               <span className="hidden lg:inline">060 6160776</span>
             </a>
 
-            <Menu className="md:hidden text-gray-600 cursor-pointer" />
+            {/* Mobile Menu Trigger */}
+            <button onClick={() => setIsMenuOpen(true)} className="md:hidden text-gray-600 p-2">
+              <Menu size={28} />
+            </button>
           </div>
         </div>
       </nav>
+
+      {/* --- MOBILE SIDEBAR MENU --- */}
+      <div className={`fixed inset-0 z-[100] transition-visibility duration-300 ${isMenuOpen ? 'visible' : 'invisible'}`}>
+        {/* Dark Overlay (clickable to close) */}
+        <div 
+          className={`absolute inset-0 bg-black/20 backdrop-blur-sm transition-opacity duration-300 ${isMenuOpen ? 'opacity-100' : 'opacity-0'}`}
+          onClick={() => setIsMenuOpen(false)}
+        />
+        
+        {/* Menu Panel */}
+        <div className={`absolute right-0 top-0 h-full w-[65%] max-w-sm bg-white shadow-2xl transition-transform duration-300 ease-out p-8 ${isMenuOpen ? 'translate-x-0' : 'translate-x-full'}`}>
+          <div className="flex justify-between items-center mb-12">
+            <span className="font-bold text-blue-600 uppercase tracking-widest">Meni</span>
+            <button onClick={() => setIsMenuOpen(false)} className="p-2 text-gray-500 hover:text-black">
+              <X size={32} />
+            </button>
+          </div>
+
+          <div className="flex flex-col gap-8 text-xl font-bold">
+            <a href="#services" onClick={(e) => scrollToSection(e, 'services')} className="flex items-center justify-between border-b pb-4 border-gray-50">Usluge <ChevronRight size={20} className="text-gray-300" /></a>
+            <a href="#projects" onClick={(e) => scrollToSection(e, 'projects')} className="flex items-center justify-between border-b pb-4 border-gray-50">Galerija <ChevronRight size={20} className="text-gray-300" /></a>
+            <a href="#about" onClick={(e) => scrollToSection(e, 'about')} className="flex items-center justify-between border-b pb-4 border-gray-50">O nama <ChevronRight size={20} className="text-gray-300" /></a>
+            
+            <a href="tel:0606160776" className="mt-4 flex items-center gap-3 bg-gray-900 text-white p-5 rounded-2xl justify-center shadow-xl shadow-gray-200">
+              <Phone size={24} fill="currentColor" />
+              060 6160776
+            </a>
+          </div>
+        </div>
+      </div>
 
       {/* Hero Section */}
       <section className="pt-48 pb-24 px-6 text-center animate-in fade-in slide-in-from-bottom-8 duration-1000">
@@ -123,19 +153,11 @@ const ServicePage = () => {
         <p className="text-xl text-gray-500 max-w-2xl mx-auto mb-10">
           Renoviranje kupatila i kuhinja? Zapušena sudopera? Curenje ventila i zamena slavina? Brzo i efikasno izvođenje radova. 
         </p>
-        
         <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
-          <a 
-            href="tel:0606160776"
-            className="w-full sm:w-auto flex items-center justify-center gap-2 bg-gray-900 text-white px-8 py-4 rounded-full font-bold hover:bg-gray-800 transition-all hover:scale-105 shadow-lg"
-          >
-            <Phone size={20} />
-            Pozovite 0606160776
+          <a href="tel:0606160776" className="w-full sm:w-auto flex items-center justify-center gap-2 bg-gray-900 text-white px-8 py-4 rounded-full font-bold hover:bg-gray-800 transition-all shadow-lg">
+            <Phone size={20} /> Pozovite 0606160776
           </a>
-          <button 
-            onClick={(e) => scrollToSection(e, 'projects')}
-            className="w-full sm:w-auto bg-blue-600 text-white px-8 py-4 rounded-full font-bold hover:bg-blue-700 transition-all hover:scale-105 shadow-lg shadow-blue-200"
-          >
+          <button onClick={(e) => scrollToSection(e, 'projects')} className="w-full sm:w-auto bg-blue-600 text-white px-8 py-4 rounded-full font-bold hover:bg-blue-700 transition-all shadow-lg">
             Pogledaj Galeriju
           </button>
         </div>
@@ -169,7 +191,7 @@ const ServicePage = () => {
         </div>
       </section>
 
-      {/* --- GALLERY SECTION --- */}
+      {/* Gallery Section */}
       <section id="projects" className="py-32 px-6 max-w-7xl mx-auto">
         <div className="text-center mb-16">
           <h2 className="text-4xl font-bold tracking-tight mb-4">Galerija</h2>
@@ -184,11 +206,7 @@ const ServicePage = () => {
               className="group relative cursor-pointer overflow-hidden rounded-[2.5rem] bg-gray-100 aspect-[4/5] shadow-lg"
               onClick={() => setSelectedIndex(index)}
             >
-              <img
-                src={item.img}
-                alt={item.title}
-                className="h-full w-full object-cover transition-transform duration-1000 group-hover:scale-110"
-              />
+              <img src={item.img} alt={item.title} className="h-full w-full object-cover transition-transform duration-1000 group-hover:scale-110" />
               <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-all duration-500 flex flex-col justify-end p-10">
                 <p className="text-blue-400 text-xs font-bold uppercase mb-2 tracking-[0.2em]">{item.category}</p>
                 <h4 className="text-white text-2xl font-bold">{item.title}</h4>
@@ -208,35 +226,24 @@ const ServicePage = () => {
         </div>
       </section>
 
-      {/* --- FULL SCREEN GRID OVERLAY --- */}
+      {/* Full Gallery Overlay */}
       {isFullGalleryOpen && (
         <div className="fixed inset-0 z-[110] bg-white overflow-y-auto animate-in slide-in-from-bottom duration-700 ease-out">
           <div className="sticky top-0 bg-white/95 backdrop-blur-2xl z-20 px-6 py-8 border-b border-gray-100">
             <div className="max-w-7xl mx-auto flex justify-between items-center">
               <div>
                 <h2 className="text-3xl font-bold text-gray-900 tracking-tight">Svi Radovi</h2>
-                <p className="text-gray-500 font-medium">{galleryItems.length} fotografija u kolekciji</p>
+                <p className="text-gray-500 font-medium">{galleryItems.length} fotografija</p>
               </div>
-              <button
-                onClick={() => setIsFullGalleryOpen(false)}
-                className="p-4 bg-gray-100 hover:bg-red-50 hover:text-red-600 rounded-full transition-all duration-300"
-              >
+              <button onClick={() => setIsFullGalleryOpen(false)} className="p-4 bg-gray-100 hover:bg-red-50 hover:text-red-600 rounded-full transition-all">
                 <X size={32} />
               </button>
             </div>
           </div>
-
           <div className="max-w-7xl mx-auto p-8 lg:p-20">
             <div className="columns-1 sm:columns-2 lg:columns-3 gap-8 space-y-8">
               {galleryItems.map((item, index) => (
-                <div
-                  key={`full-${item.id}`}
-                  className="break-inside-avoid rounded-3xl overflow-hidden cursor-zoom-in hover:ring-[12px] hover:ring-blue-50 transition-all duration-500"
-                  onClick={() => {
-                    setSelectedIndex(index);
-                    setIsFullGalleryOpen(false);
-                  }}
-                >
+                <div key={`full-${item.id}`} className="break-inside-avoid rounded-3xl overflow-hidden cursor-zoom-in transition-all duration-500" onClick={() => {setSelectedIndex(index); setIsFullGalleryOpen(false);}}>
                   <img src={item.img} alt={item.title} className="w-full h-auto rounded-3xl shadow-xl border border-gray-100" />
                 </div>
               ))}
@@ -245,51 +252,23 @@ const ServicePage = () => {
         </div>
       )}
 
-      {/* --- LIGHTBOX OVERLAY --- */}
+      {/* Lightbox Overlay */}
       {selectedIndex !== null && (
-        <div
-          className="fixed inset-0 z-[120] flex items-center justify-center bg-white/80 backdrop-blur-3xl p-6 transition-all duration-500 animate-in fade-in"
-          onClick={() => setSelectedIndex(null)}
-        >
-          <button className="absolute top-10 right-10 text-gray-400 hover:text-blue-600 transition-colors duration-300" onClick={() => setSelectedIndex(null)}>
-            <X size={48} strokeWidth={1.5} />
-          </button>
-
-          <button className="absolute left-6 md:left-12 text-gray-300 hover:text-blue-600 hover:scale-110 transition-all duration-300" onClick={prevImg}>
-            <ChevronLeft size={80} strokeWidth={1} />
-          </button>
-
-          <button className="absolute right-6 md:right-12 text-gray-300 hover:text-blue-600 hover:scale-110 transition-all duration-300" onClick={nextImg}>
-            <ChevronRight size={80} strokeWidth={1} />
-          </button>
-
+        <div className="fixed inset-0 z-[120] flex items-center justify-center bg-white/80 backdrop-blur-3xl p-6 transition-all duration-500 animate-in fade-in" onClick={() => setSelectedIndex(null)}>
+          <button className="absolute top-10 right-10 text-gray-400 hover:text-blue-600" onClick={() => setSelectedIndex(null)}><X size={48} /></button>
+          <button className="absolute left-6 text-gray-300 hover:text-blue-600" onClick={prevImg}><ChevronLeft size={80} /></button>
+          <button className="absolute right-6 text-gray-300 hover:text-blue-600" onClick={nextImg}><ChevronRight size={80} /></button>
           <div className="max-w-6xl w-full flex flex-col items-center animate-in zoom-in-95 duration-500" onClick={(e) => e.stopPropagation()}>
-            <img
-              src={galleryItems[selectedIndex].img}
-              className="max-h-[75vh] w-auto rounded-[3rem] shadow-[0_40px_100px_rgba(0,0,0,0.15)] border-[12px] border-white"
-              alt="Expanded View"
-            />
+            <img src={galleryItems[selectedIndex].img} className="max-h-[75vh] w-auto rounded-[3rem] shadow-2xl border-[12px] border-white" alt="View" />
             <div className="mt-10 text-center">
-              <span className="text-blue-600 text-sm font-black uppercase tracking-[0.3em]">{galleryItems[selectedIndex].category}</span>
-              <h3 className="text-5xl font-extrabold text-gray-900 mt-3 tracking-tight">{galleryItems[selectedIndex].title}</h3>
-
-              <div className="flex gap-3 justify-center mt-10">
-                {galleryItems.map((_, i) => (
-                  <div key={i} className={`h-2 transition-all duration-700 rounded-full ${i === selectedIndex ? 'w-16 bg-blue-600' : 'w-3 bg-gray-200'}`} />
-                ))}
-              </div>
+              <span className="text-blue-600 text-sm font-black uppercase tracking-widest">{galleryItems[selectedIndex].category}</span>
+              <h3 className="text-5xl font-extrabold text-gray-900 mt-3">{galleryItems[selectedIndex].title}</h3>
             </div>
           </div>
         </div>
       )}
 
       <footer className="py-20 border-t border-gray-100 text-center">
-        <div className="mb-6 flex justify-center gap-2">
-            <div className="w-8 h-8 bg-blue-600 rounded flex items-center justify-center">
-              <span className="text-white font-bold text-sm">V</span>
-            </div>
-            <span className="font-bold uppercase tracking-widest text-gray-900">Vitke Media</span>
-        </div>
         <p className="text-gray-400 font-medium">© 2026 VITKE MEDIA. All rights reserved.</p>
       </footer>
     </div>
