@@ -5,6 +5,11 @@ import photo2 from './photos/photo2.jpg'
 import photo3 from './photos/photo3.jpg'
 import photo4 from './photos/photo4.jpg'
 import photo5 from './photos/photo5.jpg'
+import photo6 from './photos/photo6.jpg'
+import photo7 from './photos/photo7.jpg'
+import photo8 from './photos/photo8.jpg'
+import photo9 from './photos/photo9.jpg'
+import photo10 from './photos/photo10.jpg'
 
 const ServicePage = () => {
   const [selectedIndex, setSelectedIndex] = useState(null);
@@ -23,9 +28,14 @@ const ServicePage = () => {
   const galleryItems = [
     { id: 1, title: "Moderno Kupatilo", category: "Keramika", img: photo1 },
     { id: 2, title: "Instalacije", category: "Vodovod", img: photo2 },
-    { id: 3, title: "Podne Pločice", category: "Keramika", img: photo3 },
-    { id: 4, title: "Kuhinjski Radovi", category: "Keramika", img: photo4 },
+    { id: 3, title: "Kupatilo sa visokim stepenikom za tuš kapinu", category: "Keramika", img: photo3 },
+    { id: 4, title: "Kuhinja", category: "Keramika", img: photo4 },
     { id: 5, title: "Moderno Kupatilo", category: "Keramika", img: photo5 },
+    { id: 6, title: "Moderno Kupatilo", category: "Keramika", img: photo6 },
+    { id: 7, title: "Kupatilo sa niskim stepenikom za tuš kapinu", category: "Keramika", img: photo7 },
+    { id: 8, title: "Kupatilo", category: "Keramika", img: photo8 },
+    { id: 9, title: "Kuhinja", category: "Keramika", img: photo9 },
+    { id: 10, title: "Moderno Kupatilo", category: "Keramika", img: photo10 },
   ];
 
   const scrollToSection = (e, id) => {
