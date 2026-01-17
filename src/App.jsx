@@ -92,11 +92,10 @@ const ServicePage = () => {
   };
 
   return (
-    <div className="min-h-screen bg-white text-gray-900 font-sans selection:bg-blue-100 selection:text-blue-900">
-      {/* Google Fonts - Outfit */}
+    <div className="min-h-screen bg-white text-gray-900 selection:bg-blue-100 selection:text-blue-900" style={{ fontFamily: "'Roboto', sans-serif" }}>      {/* Google Fonts - Outfit */}
       <style>
-        {`@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&display=swap');
-          body { font-family: 'Outfit', sans-serif; }`}
+        {`@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700;900&display=swap');
+        body { font-family: 'Roboto', sans-serif; }`}
       </style>
 
       {/* --- HEADER --- */}
@@ -168,7 +167,7 @@ const ServicePage = () => {
       <section id="about" className="py-24 bg-white px-6 border-t border-gray-50">
         <div className="max-w-4xl mx-auto text-center">
           <h2 className={sectionTitleStyle}>O nama</h2>
-          <div className="w-full max-w-md h-[1.5px] bg-gradient-to-r from-transparent via-blue-600 to-transparent mx-auto mb-10"></div>          
+          <div className="w-full max-w-md h-[1.5px] bg-gradient-to-r from-transparent via-blue-600 to-transparent mx-auto mb-10"></div>
           <p className="text-xl text-gray-600 leading-relaxed font-medium">
             Ekipa sa iskustvom od preko 30 godina u poslovima keramike, vodovoda i izolacije. Vršimo radove na teritoriji grada Beograda.
           </p>
@@ -179,7 +178,7 @@ const ServicePage = () => {
       <section id="services" className="pt-20 pb-32 bg-gray-50 px-6">
         <div className="max-w-6xl mx-auto text-center">
           <h2 className={sectionTitleStyle}>Naše usluge</h2>
-          <div className="w-full max-w-md h-[1.5px] bg-gradient-to-r from-transparent via-blue-600 to-transparent mx-auto mb-10"></div>          
+          <div className="w-full max-w-md h-[1.5px] bg-gradient-to-r from-transparent via-blue-600 to-transparent mx-auto mb-10"></div>
           <div className="grid md:grid-cols-3 gap-10 text-left">
             {services.map((s, i) => (
               <div key={i} className="bg-white p-10 rounded-3xl shadow-sm hover:shadow-xl transition-all duration-500 border border-gray-100 group">
@@ -198,7 +197,7 @@ const ServicePage = () => {
       <section id="projects" className="pt-20 pb-32 px-6 max-w-7xl mx-auto">
         <div className="text-center mb-16">
           <h2 className={sectionTitleStyle}>Galerija</h2>
-          <div className="w-full max-w-md h-[1.5px] bg-gradient-to-r from-transparent via-blue-600 to-transparent mx-auto mb-10"></div>          
+          <div className="w-full max-w-md h-[1.5px] bg-gradient-to-r from-transparent via-blue-600 to-transparent mx-auto mb-10"></div>
           <p className="text-gray-500 text-lg font-medium">Pogledajte neke od naših radova.</p>
         </div>
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-16">
