@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { X, ChevronLeft, ChevronRight, Globe, CheckCircle, MessageSquare, Maximize2, Menu } from 'lucide-react';
+import { X, ChevronLeft, ChevronRight, Globe, CheckCircle, MessageSquare, Maximize2, Menu, Phone } from 'lucide-react';
 import photo1 from './photos/photo1.jpg'
 import photo2 from './photos/photo2.jpg'
 import photo3 from './photos/photo3.jpg'
@@ -35,10 +35,9 @@ const ServicePage = () => {
     const targetPosition = element.getBoundingClientRect().top + window.pageYOffset - 80;
     const startPosition = window.pageYOffset;
     const distance = targetPosition - startPosition;
-    const duration = 1000; // <--- CHANGE THIS: Higher number = Slower scroll (e.g., 2000 for very slow)
+    const duration = 1500; // Malo sporije za bolji efekat
     let start = null;
 
-    // Smooth cubic easing function for a professional feel
     const ease = (t, b, c, d) => {
       t /= d / 2;
       if (t < 1) return (c / 2) * t * t * t + b;
@@ -56,7 +55,6 @@ const ServicePage = () => {
     window.requestAnimationFrame(step);
   };
 
-  // --- KEYBOARD NAVIGATION LOGIC ---
   useEffect(() => {
     const handleKeyDown = (e) => {
       if (selectedIndex !== null) {
@@ -67,7 +65,6 @@ const ServicePage = () => {
         if (e.key === 'Escape') setIsFullGalleryOpen(false);
       }
     };
-
     window.addEventListener('keydown', handleKeyDown);
     return () => window.removeEventListener('keydown', handleKeyDown);
   }, [selectedIndex, isFullGalleryOpen]);
@@ -88,7 +85,7 @@ const ServicePage = () => {
       {/* --- HEADER / NAVIGATION --- */}
       <nav className="fixed top-0 w-full bg-white/80 backdrop-blur-md border-b border-gray-100 z-40">
         <div className="max-w-7xl mx-auto px-6 h-20 flex items-center justify-between">
-          <div className="flex items-center gap-2 cursor-pointer" onClick={(e) => window.scrollTo({top: 0, behavior: 'smooth'})}>
+          <div className="flex items-center gap-2 cursor-pointer" onClick={() => window.scrollTo({top: 0, behavior: 'smooth'})}>
             <div className="w-10 h-10 bg-blue-600 rounded-lg flex items-center justify-center">
               <span className="text-white font-bold text-xl">V</span>
             </div>
@@ -110,22 +107,33 @@ const ServicePage = () => {
           Keramičar i vodoinstalater <br /><span className="text-blue-600">Beograd</span>
         </h1>
         <p className="text-xl text-gray-500 max-w-2xl mx-auto mb-10">
-        Renoviranje kupatila i kuhinja? Zapušena sudopera? Curenje ventila i zamena slavina? Brzo i efikasno izvođenje radova. 
+          Renoviranje kupatila i kuhinja? Zapušena sudopera? Curenje ventila i zamena slavina? Brzo i efikasno izvođenje radova. 
         </p>
-        <button 
-          onClick={(e) => scrollToSection(e, 'projects')}
-          className="bg-blue-600 text-white px-8 py-4 rounded-full font-bold hover:bg-blue-700 transition-all hover:scale-105 shadow-lg shadow-blue-200"
-        >
-          Pogledaj Galeriju
-        </button>
+        
+        {/* --- DUGMAD --- */}
+        <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
+          <a 
+            href="tel:0606160776"
+            className="w-full sm:w-auto flex items-center justify-center gap-2 bg-gray-900 text-white px-8 py-4 rounded-full font-bold hover:bg-gray-800 transition-all hover:scale-105 shadow-lg"
+          >
+            <Phone size={20} />
+            Pozovite 0606160776
+          </a>
+          <button 
+            onClick={(e) => scrollToSection(e, 'projects')}
+            className="w-full sm:w-auto bg-blue-600 text-white px-8 py-4 rounded-full font-bold hover:bg-blue-700 transition-all hover:scale-105 shadow-lg shadow-blue-200"
+          >
+            Pogledaj Galeriju
+          </button>
+        </div>
       </section>
 
       {/* About Section */}
-      <section id="about" className="py-32 bg-white px-6">
+      <section id="about" className="py-32 bg-white px-6 border-t border-gray-50">
         <div className="max-w-4xl mx-auto text-center">
           <h2 className="text-3xl font-bold mb-8">O nama</h2>
           <p className="text-lg text-gray-600 leading-relaxed">
-          Ekipa sa iskustvom od preko 30 godina u poslovima keramike, vodovoda i izolacije. Vršimo radove na teritoriji grada Beograda.
+            Ekipa sa iskustvom od preko 30 godina u poslovima keramike, vodovoda i izolacije. Vršimo radove na teritoriji grada Beograda.
           </p>
         </div>
       </section>
