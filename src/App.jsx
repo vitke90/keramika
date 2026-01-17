@@ -105,7 +105,7 @@ const ServicePage = () => {
             <div className="w-10 h-10 bg-blue-600 rounded-lg flex items-center justify-center shrink-0">
               <span className="text-white font-bold text-xl">V</span>
             </div>
-            <span className="text-lg md:text-xl font-bold tracking-tight text-gray-900 uppercase">Keramičar i Vodoinstalater</span>
+            <span className="text-lg md:text-l font-bold tracking-tight text-gray-800 uppercase">Keramičar i Vodoinstalater</span>
           </div>
           <div className="flex items-center gap-4">
             <div className="hidden md:flex items-center gap-8 font-medium text-gray-600">
@@ -145,21 +145,40 @@ const ServicePage = () => {
         </div>
       </div>
 
-      {/* --- HERO SECTION --- */}
-      <section className="pt-48 pb-24 px-6 text-center animate-in fade-in slide-in-from-bottom-8 duration-1000">
-        <h1 className="text-5xl md:text-7xl font-extrabold mb-6 tracking-tighter leading-tight text-gray-900">
-          Keramičar i vodoinstalater <br /><span className="text-blue-600">Beograd</span>
-        </h1>
-        <p className="text-xl text-gray-500 max-w-2xl mx-auto mb-10 font-medium">
-          Renoviranje kupatila i kuhinja? Zapušena sudopera? Curenje ventila i zamena slavina? Brzo i efikasno izvođenje radova.
-        </p>
-        <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
-          <a href="tel:0606160776" className="w-full sm:w-auto flex items-center justify-center gap-2 bg-gray-900 text-white px-8 py-4 rounded-full font-bold hover:bg-gray-800 transition-all shadow-lg">
-            <Phone size={20} /> Pozovite 0606160776
-          </a>
-          <button onClick={(e) => scrollToSection(e, 'projects')} className="w-full sm:w-auto bg-blue-600 text-white px-8 py-4 rounded-full font-bold hover:bg-blue-700 transition-all shadow-lg">
-            Pogledaj Galeriju
-          </button>
+      {/* Hero Section */}
+      <section className="relative pt-48 pb-24 px-6 text-center overflow-hidden bg-white">
+        
+        {/* POZADINSKA SLIKA - Pojačana vidljivost */}
+        <div 
+          className="absolute inset-0 z-0 opacity-40 grayscale-[20%]" 
+          style={{ 
+            backgroundImage: `url(${photo1})`, 
+            backgroundSize: 'cover',
+            backgroundPosition: 'center',
+          }}
+        ></div>
+        
+        {/* OVERLAY - Gradijent koji čuva čitljivost teksta u sredini */}
+        <div className="absolute inset-0 z-10 bg-white/40 backdrop-blur-[2px]"></div>
+
+        {/* SADRŽAJ - Sa tvojim originalnim tekstom i senkom za čitljivost */}
+        <div className="relative z-20 animate-in fade-in slide-in-from-bottom-8 duration-1000">
+          <h1 className="text-5xl md:text-6xl font-black mb-6 tracking-tight leading-tight text-gray-900 drop-shadow-sm font-roboto uppercase">
+            Keramičar i vodoinstalater <br /><span className="text-blue-600">Beograd</span>
+          </h1>
+          
+          <p className="text-xl text-gray-800 max-w-2xl mx-auto mb-10 font-bold drop-shadow-sm">
+            Renoviranje kupatila i kuhinja? Zapušena sudopera? Curenje ventila i zamena slavina? Brzo i efikasno izvođenje radova.
+          </p>
+          
+          <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
+            <a href="tel:0606160776" className="w-full sm:w-auto flex items-center justify-center gap-2 bg-gray-900 text-white px-8 py-4 rounded-full font-bold hover:bg-gray-800 transition-all shadow-lg">
+              <Phone size={20} /> Pozovite 0606160776
+            </a>
+            <button onClick={(e) => scrollToSection(e, 'projects')} className="w-full sm:w-auto bg-blue-600 text-white px-8 py-4 rounded-full font-bold hover:bg-blue-700 transition-all shadow-lg">
+              Pogledaj Galeriju
+            </button>
+          </div>
         </div>
       </section>
 
