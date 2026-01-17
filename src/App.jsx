@@ -20,7 +20,6 @@ const ServicePage = () => {
   const [touchStart, setTouchStart] = useState(null);
   const [touchEnd, setTouchEnd] = useState(null);
 
-  // Unificirana klasa za naslove sekcija
   const sectionTitleStyle = "text-4xl md:text-4xl font-extrabold tracking-tight text-gray-900 mb-6";
 
   const services = [
@@ -157,21 +156,21 @@ const ServicePage = () => {
         </div>
       </nav>
 
-      {/* --- MOBILE SIDEBAR --- */}
+      {/* --- MOBILE SIDEBAR (IZMENJEN: Centrirano bez strelica) --- */}
       <div className={`fixed inset-0 z-[100] ${isMenuOpen ? 'visible' : 'invisible'}`}>
         <div className={`absolute inset-0 bg-black/40 backdrop-blur-sm transition-opacity duration-300 ${isMenuOpen ? 'opacity-100' : 'opacity-0'}`} onClick={() => setIsMenuOpen(false)} />
-        <div className={`absolute right-0 top-0 h-full w-[75%] max-w-sm bg-white shadow-2xl transition-transform duration-300 ease-out p-8 ${isMenuOpen ? 'translate-x-0' : 'translate-x-full'}`}>
-          <div className="flex justify-between items-center mb-12">
-            <span className="font-bold text-blue-600 uppercase tracking-widest">Meni</span>
+        <div className={`absolute right-0 top-0 h-full w-[85%] max-w-sm bg-white shadow-2xl transition-transform duration-300 ease-out p-8 flex flex-col ${isMenuOpen ? 'translate-x-0' : 'translate-x-full'}`}>
+          <div className="flex justify-end items-center mb-12">
             <button onClick={() => setIsMenuOpen(false)} className="p-2 text-gray-500 hover:text-black">
               <X size={32} />
             </button>
           </div>
-          <div className="flex flex-col gap-8 text-xl font-bold">
-            <a href="#about" onClick={(e) => scrollToSection(e, 'about')} className="flex items-center justify-between border-b pb-4 border-gray-50">O nama <ChevronRight size={20} className="text-gray-300" /></a>
-            <a href="#services" onClick={(e) => scrollToSection(e, 'services')} className="flex items-center justify-between border-b pb-4 border-gray-50">Usluge <ChevronRight size={20} className="text-gray-300" /></a>
-            <a href="#projects" onClick={(e) => scrollToSection(e, 'projects')} className="flex items-center justify-between border-b pb-4 border-gray-50">Galerija <ChevronRight size={20} className="text-gray-300" /></a>
-            <a href="tel:0606160776" className="mt-4 flex items-center gap-3 bg-gray-900 text-white p-5 rounded-2xl justify-center shadow-xl">
+          <div className="flex flex-col gap-10 text-2xl font-bold text-center">
+            <a href="#about" onClick={(e) => scrollToSection(e, 'about')} className="text-gray-900 hover:text-blue-600 transition-colors">O nama</a>
+            <a href="#services" onClick={(e) => scrollToSection(e, 'services')} className="text-gray-900 hover:text-blue-600 transition-colors">Usluge</a>
+            <a href="#projects" onClick={(e) => scrollToSection(e, 'projects')} className="text-gray-900 hover:text-blue-600 transition-colors">Galerija</a>
+            
+            <a href="tel:0606160776" className="mt-6 flex items-center gap-3 bg-blue-600 text-white p-5 rounded-2xl justify-center shadow-lg active:scale-95 transition-transform">
               <Phone size={24} fill="currentColor" /> 060 6160776
             </a>
           </div>
@@ -304,7 +303,7 @@ const ServicePage = () => {
         </div>
       )}
 
-      {/* --- LIGHTBOX (IZMENJEN: SAMO SLIKA) --- */}
+      {/* --- LIGHTBOX (SAMO SLIKA) --- */}
       {selectedIndex !== null && (
         <div 
           className="fixed inset-0 z-[120] flex items-center justify-center bg-black/95 backdrop-blur-xl touch-none" 
@@ -313,12 +312,10 @@ const ServicePage = () => {
           onTouchMove={handleTouchMove}
           onTouchEnd={handleTouchEnd}
         >
-          {/* Dugme za zatvaranje */}
           <button className="absolute top-6 right-6 text-white/50 hover:text-white z-[130]" onClick={() => setSelectedIndex(null)}>
             <X size={40} />
           </button>
 
-          {/* Strelice (Desktop) */}
           <button className="hidden md:block absolute left-8 text-white/30 hover:text-white transition-all z-[130]" onClick={prevImg}>
             <ChevronLeft size={64} strokeWidth={1.5} />
           </button>
@@ -326,7 +323,6 @@ const ServicePage = () => {
             <ChevronRight size={64} strokeWidth={1.5} />
           </button>
 
-          {/* Samo Slika (Bez naslova i opisa) */}
           <div className="w-full h-full flex items-center justify-center p-2 md:p-12" onClick={(e) => e.stopPropagation()}>
             <img 
               src={galleryItems[selectedIndex].img} 
