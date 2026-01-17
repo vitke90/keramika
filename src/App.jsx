@@ -17,6 +17,8 @@ const ServicePage = () => {
   const [isFullGalleryOpen, setIsFullGalleryOpen] = useState(false);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [carouselStart, setCarouselStart] = useState(0);
+  const [touchStart, setTouchStart] = useState(null);
+  const [touchEnd, setTouchEnd] = useState(null);
 
   // Unificirana klasa za naslove sekcija
   const sectionTitleStyle = "text-4xl md:text-4xl font-extrabold tracking-tight text-gray-900 mb-6";
@@ -99,6 +101,28 @@ const ServicePage = () => {
 
   const prevCarousel = () => {
     setCarouselStart((prev) => (prev - 1 + galleryItems.length) % galleryItems.length);
+  };
+
+  const handleTouchStart = (e) => {
+    setTouchEnd(null);
+    setTouchStart(e.targetTouches[0].clientX);
+  };
+
+  const handleTouchMove = (e) => {
+    setTouchEnd(e.targetTouches[0].clientX);
+  };
+
+  const handleTouchEnd = () => {
+    if (!touchStart || !touchEnd) return;
+    const distance = touchStart - touchEnd;
+    const isLeftSwipe = distance > 50;
+    const isRightSwipe = distance < -50;
+
+    if (isLeftSwipe) {
+      nextCarousel();
+    } else if (isRightSwipe) {
+      prevCarousel();
+    }
   };
 
   return (
@@ -248,10 +272,14 @@ const ServicePage = () => {
             <ChevronLeft size={32} />
           </button>
 
-          {/* Kontejner za slike */}
-          <div className="flex gap-4 md:gap-6 overflow-hidden">
+          {/* Kontejner za slike sa Swipe podrškom */}
+          <div 
+            className="flex gap-4 md:gap-6 overflow-hidden touch-pan-y"
+            onTouchStart={handleTouchStart}
+            onTouchMove={handleTouchMove}
+            onTouchEnd={handleTouchEnd}
+          >
             {[0, 1, 2, 3].map((offset) => {
-              // Ova formula osigurava da uvek imamo 4 ispravne slike u nizu (Infinite loop)
               const itemIndex = (carouselStart + offset) % galleryItems.length;
               const item = galleryItems[itemIndex];
 
@@ -259,17 +287,16 @@ const ServicePage = () => {
                 <div 
                   key={`carousel-${item.id}-${offset}`} 
                   className={`
-                    relative cursor-pointer overflow-hidden rounded-[2.5rem] bg-gray-100 aspect-[4/5] shadow-lg transition-all duration-500 transform hover:scale-[1.02]
-                    ${offset === 0 ? 'w-full' : 'hidden'} 
-                    md:block md:w-1/4
+                    relative cursor-pointer overflow-hidden rounded-[2.5rem] bg-gray-100 aspect-[4/5] shadow-lg transition-all duration-500 transform
+                    ${offset === 0 ? 'w-full shrink-0' : 'hidden'} 
+                    md:block md:w-1/4 md:shrink-0
                   `}
                   onClick={() => setSelectedIndex(itemIndex)}
                 >
                   <img 
                     src={item.img} 
                     alt={item.title} 
-                    className="h-full w-full object-cover transition-transform duration-1000 hover:scale-110" 
-                    style={{ imageRendering: 'auto' }}
+                    className="h-full w-full object-cover" 
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent flex flex-col justify-end p-8 opacity-100 md:opacity-0 group-hover:opacity-100 transition-opacity duration-300">
                     <p className="text-blue-400 text-xs font-bold uppercase mb-1 tracking-widest">{item.category}</p>
