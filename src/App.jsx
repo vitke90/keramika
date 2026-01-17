@@ -163,7 +163,7 @@ const ServicePage = () => {
 
         {/* SADRŽAJ - Sa tvojim originalnim tekstom i senkom za čitljivost */}
         <div className="relative z-20 animate-in fade-in slide-in-from-bottom-8 duration-1000">
-          <h1 className="text-5xl md:text-6xl font-black mb-6 tracking-tight leading-tight text-gray-900 drop-shadow-sm font-roboto uppercase">
+          <h1 className="text-4xl md:text-6xl font-black mb-6 tracking-tight leading-tight text-gray-900 drop-shadow-sm font-roboto uppercase">
             Keramičar i vodoinstalater <br /><span className="text-blue-600">Beograd</span>
           </h1>
           
