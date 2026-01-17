@@ -35,7 +35,7 @@ const ServicePage = () => {
     const targetPosition = element.getBoundingClientRect().top + window.pageYOffset - 80;
     const startPosition = window.pageYOffset;
     const distance = targetPosition - startPosition;
-    const duration = 1500; // Malo sporije za bolji efekat
+    const duration = 1200;
     let start = null;
 
     const ease = (t, b, c, d) => {
@@ -83,21 +83,35 @@ const ServicePage = () => {
     <div className="min-h-screen bg-white text-gray-900 font-sans">
       
       {/* --- HEADER / NAVIGATION --- */}
-      <nav className="fixed top-0 w-full bg-white/80 backdrop-blur-md border-b border-gray-100 z-40">
+      <nav className="fixed top-0 w-full bg-white/80 backdrop-blur-md border-b border-gray-100 z-50">
         <div className="max-w-7xl mx-auto px-6 h-20 flex items-center justify-between">
+          {/* Logo */}
           <div className="flex items-center gap-2 cursor-pointer" onClick={() => window.scrollTo({top: 0, behavior: 'smooth'})}>
-            <div className="w-10 h-10 bg-blue-600 rounded-lg flex items-center justify-center">
+            <div className="w-10 h-10 bg-blue-600 rounded-lg flex items-center justify-center shrink-0">
               <span className="text-white font-bold text-xl">V</span>
             </div>
-            <span className="text-xl font-bold tracking-tight text-gray-900 uppercase">Keramičar i Vodoinstalater</span>
+            <span className="text-lg md:text-xl font-bold tracking-tight text-gray-900 uppercase">Keramičar i Vodoinstalater</span>
           </div>
 
-          <div className="hidden md:flex items-center gap-10 font-medium text-gray-600">
-            <a href="#services" onClick={(e) => scrollToSection(e, 'services')} className="hover:text-blue-600 transition-colors duration-300">Usluge</a>
-            <a href="#projects" onClick={(e) => scrollToSection(e, 'projects')} className="hover:text-blue-600 transition-colors duration-300">Galerija</a>
-            <a href="#about" onClick={(e) => scrollToSection(e, 'about')} className="hover:text-blue-600 transition-colors duration-300">O nama</a>
+          {/* Nav links + Mini Call Button */}
+          <div className="flex items-center gap-4 md:gap-8">
+            <div className="hidden md:flex items-center gap-8 font-medium text-gray-600">
+              <a href="#services" onClick={(e) => scrollToSection(e, 'services')} className="hover:text-blue-600 transition-colors duration-300">Usluge</a>
+              <a href="#projects" onClick={(e) => scrollToSection(e, 'projects')} className="hover:text-blue-600 transition-colors duration-300">Galerija</a>
+              <a href="#about" onClick={(e) => scrollToSection(e, 'about')} className="hover:text-blue-600 transition-colors duration-300">O nama</a>
+            </div>
+            
+            {/* Top Menu Call Button */}
+            <a 
+              href="tel:0606160776"
+              className="flex items-center gap-2 bg-blue-600 text-white px-4 py-2.5 rounded-full font-bold text-sm hover:bg-blue-700 transition-all shadow-md shadow-blue-100"
+            >
+              <Phone size={16} fill="currentColor" />
+              <span className="hidden lg:inline">060 6160776</span>
+            </a>
+
+            <Menu className="md:hidden text-gray-600 cursor-pointer" />
           </div>
-          <Menu className="md:hidden text-gray-600" />
         </div>
       </nav>
 
@@ -110,7 +124,6 @@ const ServicePage = () => {
           Renoviranje kupatila i kuhinja? Zapušena sudopera? Curenje ventila i zamena slavina? Brzo i efikasno izvođenje radova. 
         </p>
         
-        {/* --- DUGMAD --- */}
         <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
           <a 
             href="tel:0606160776"
