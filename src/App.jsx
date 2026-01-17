@@ -84,11 +84,11 @@ const ServicePage = () => {
 
   return (
     <div className="min-h-screen bg-white text-gray-900 font-sans">
-      
+
       {/* --- HEADER / NAVIGATION --- */}
       <nav className="fixed top-0 w-full bg-white/80 backdrop-blur-md border-b border-gray-100 z-50">
         <div className="max-w-7xl mx-auto px-6 h-20 flex items-center justify-between">
-          <div className="flex items-center gap-2 cursor-pointer" onClick={() => window.scrollTo({top: 0, behavior: 'smooth'})}>
+          <div className="flex items-center gap-2 cursor-pointer" onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}>
             <div className="w-10 h-10 bg-blue-600 rounded-lg flex items-center justify-center shrink-0">
               <span className="text-white font-bold text-xl">V</span>
             </div>
@@ -98,11 +98,11 @@ const ServicePage = () => {
           <div className="flex items-center gap-4">
             {/* Desktop Links */}
             <div className="hidden md:flex items-center gap-8 font-medium text-gray-600">
+              <a href="#about" onClick={(e) => scrollToSection(e, 'about')} className="hover:text-blue-600 transition">O nama</a>
               <a href="#services" onClick={(e) => scrollToSection(e, 'services')} className="hover:text-blue-600 transition">Usluge</a>
               <a href="#projects" onClick={(e) => scrollToSection(e, 'projects')} className="hover:text-blue-600 transition">Galerija</a>
-              <a href="#about" onClick={(e) => scrollToSection(e, 'about')} className="hover:text-blue-600 transition">O nama</a>
             </div>
-            
+
             <a href="tel:0606160776" className="flex items-center gap-2 bg-blue-600 text-white px-4 py-2 rounded-full font-bold text-sm shadow-md">
               <Phone size={16} fill="currentColor" />
               <span className="hidden lg:inline">060 6160776</span>
@@ -119,11 +119,11 @@ const ServicePage = () => {
       {/* --- MOBILE SIDEBAR MENU --- */}
       <div className={`fixed inset-0 z-[100] transition-visibility duration-300 ${isMenuOpen ? 'visible' : 'invisible'}`}>
         {/* Dark Overlay (clickable to close) */}
-        <div 
+        <div
           className={`absolute inset-0 bg-black/20 backdrop-blur-sm transition-opacity duration-300 ${isMenuOpen ? 'opacity-100' : 'opacity-0'}`}
           onClick={() => setIsMenuOpen(false)}
         />
-        
+
         {/* Menu Panel */}
         <div className={`absolute right-0 top-0 h-full w-[65%] max-w-sm bg-white shadow-2xl transition-transform duration-300 ease-out p-8 ${isMenuOpen ? 'translate-x-0' : 'translate-x-full'}`}>
           <div className="flex justify-between items-center mb-12">
@@ -134,10 +134,9 @@ const ServicePage = () => {
           </div>
 
           <div className="flex flex-col gap-8 text-xl font-bold">
+            <a href="#about" onClick={(e) => scrollToSection(e, 'about')} className="flex items-center justify-between border-b pb-4 border-gray-50">O nama <ChevronRight size={20} className="text-gray-300" /></a>
             <a href="#services" onClick={(e) => scrollToSection(e, 'services')} className="flex items-center justify-between border-b pb-4 border-gray-50">Usluge <ChevronRight size={20} className="text-gray-300" /></a>
             <a href="#projects" onClick={(e) => scrollToSection(e, 'projects')} className="flex items-center justify-between border-b pb-4 border-gray-50">Galerija <ChevronRight size={20} className="text-gray-300" /></a>
-            <a href="#about" onClick={(e) => scrollToSection(e, 'about')} className="flex items-center justify-between border-b pb-4 border-gray-50">O nama <ChevronRight size={20} className="text-gray-300" /></a>
-            
             <a href="tel:0606160776" className="mt-4 flex items-center gap-3 bg-gray-900 text-white p-5 rounded-2xl justify-center shadow-xl shadow-gray-200">
               <Phone size={24} fill="currentColor" />
               060 6160776
@@ -152,7 +151,7 @@ const ServicePage = () => {
           Keramičar i vodoinstalater <br /><span className="text-blue-600">Beograd</span>
         </h1>
         <p className="text-xl text-gray-500 max-w-2xl mx-auto mb-10">
-          Renoviranje kupatila i kuhinja? Zapušena sudopera? Curenje ventila i zamena slavina? Brzo i efikasno izvođenje radova. 
+          Renoviranje kupatila i kuhinja? Zapušena sudopera? Curenje ventila i zamena slavina? Brzo i efikasno izvođenje radova.
         </p>
         <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
           <a href="tel:0606160776" className="w-full sm:w-auto flex items-center justify-center gap-2 bg-gray-900 text-white px-8 py-4 rounded-full font-bold hover:bg-gray-800 transition-all shadow-lg">
@@ -175,7 +174,7 @@ const ServicePage = () => {
       </section>
 
       {/* Services Section */}
-      <section id="services" className="py-32 bg-gray-50 px-6">
+      <section id="services" className="pt-20 pb-32 bg-gray-50 px-6"> {/* Promenjeno py-32 u pt-20 pb-32 */}
         <div className="max-w-6xl mx-auto text-center">
           <h2 className="text-3xl font-bold mb-16 uppercase tracking-widest text-gray-400">Naše usluge</h2>
           <div className="grid md:grid-cols-3 gap-10 text-left">
@@ -193,13 +192,12 @@ const ServicePage = () => {
       </section>
 
       {/* Gallery Section */}
-      <section id="projects" className="py-32 px-6 max-w-7xl mx-auto">
+      <section id="projects" className="pt-20 pb-32 px-6 max-w-7xl mx-auto"> {/* Promenjeno py-32 u pt-20 pb-32 */}
         <div className="text-center mb-16">
           <h2 className="text-4xl font-bold tracking-tight mb-4">Galerija</h2>
           <div className="w-20 h-1.5 bg-blue-600 mx-auto rounded-full mb-4"></div>
           <p className="text-gray-500 text-lg">Pogledajte neke od naših radova.</p>
         </div>
-
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-16">
           {galleryItems.slice(0, 4).map((item, index) => (
             <div
@@ -244,7 +242,7 @@ const ServicePage = () => {
           <div className="max-w-7xl mx-auto p-8 lg:p-20">
             <div className="columns-1 sm:columns-2 lg:columns-3 gap-8 space-y-8">
               {galleryItems.map((item, index) => (
-                <div key={`full-${item.id}`} className="break-inside-avoid rounded-3xl overflow-hidden cursor-zoom-in transition-all duration-500" onClick={() => {setSelectedIndex(index); setIsFullGalleryOpen(false);}}>
+                <div key={`full-${item.id}`} className="break-inside-avoid rounded-3xl overflow-hidden cursor-zoom-in transition-all duration-500" onClick={() => { setSelectedIndex(index); setIsFullGalleryOpen(false); }}>
                   <img src={item.img} alt={item.title} className="w-full h-auto rounded-3xl shadow-xl border border-gray-100" />
                 </div>
               ))}
