@@ -1,0 +1,21 @@
+{
+  "files": {
+    "main.js": "/keramika/static/js/main.cbbbe7c6.js",
+    "static/media/photo5.jpg": "/keramika/static/media/photo5.f03d02db6f635498e056.jpg",
+    "static/media/photo2.jpg": "/keramika/static/media/photo2.77219f1fb8aea94489e1.jpg",
+    "static/media/photo3.jpg": "/keramika/static/media/photo3.e7fd046ea17409a66946.jpg",
+    "static/media/photo6.jpg": "/keramika/static/media/photo6.466df9d9d77489b4593b.jpg",
+    "static/media/photo10.jpg": "/keramika/static/media/photo10.72fcba99364ba5d1b33e.jpg",
+    "static/media/photo7.jpg": "/keramika/static/media/photo7.6cab2ff26ec7a0df5ec9.jpg",
+    "static/media/photo8.jpg": "/keramika/static/media/photo8.6e64cf7536e1eb3c8148.jpg",
+    "static/media/photo4.jpg": "/keramika/static/media/photo4.efe019dd1ed010fa6094.jpg",
+    "static/media/photo9.jpg": "/keramika/static/media/photo9.915d8edcf4aa043e72cb.jpg",
+    "static/media/photo1.jpg": "/keramika/static/media/photo1.cdd86955e8d30c2b35c7.jpg",
+    "static/media/logo.JPG": "/keramika/static/media/logo.84d4c05ab0753144aa1c.JPG",
+    "index.html": "/keramika/index.html",
+    "main.cbbbe7c6.js.map": "/keramika/static/js/main.cbbbe7c6.js.map"
+  },
+  "entrypoints": [
+    "static/js/main.cbbbe7c6.js"
+  ]
+}
