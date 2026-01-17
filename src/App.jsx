@@ -100,39 +100,39 @@ const ServicePage = () => {
       </style>
 
       {/* --- HEADER --- */}
-<nav className="fixed top-0 w-full bg-white/80 backdrop-blur-md border-b border-gray-100 z-50">
-  <div className="max-w-7xl mx-auto px-6 h-20 flex items-center justify-between">
-    
-    {/* LEVA STRANA: Logo i Tekst */}
-    <div className="flex items-center gap-2 cursor-pointer h-full" onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}>
-      <img
-        src={logo}
-        alt="Logo"
-        // h-20 tera sliku da bude tačno 80px, object-fill ili cover je širi, object-contain je sigurniji
-        className="h-20 w-auto object-contain shrink-0" 
-      />
-      <span className="text-[13px] sm:text-sm md:text-base font-bold tracking-tight text-gray-800 uppercase whitespace-nowrap">
-        Keramičar i Vodoinstalater
-      </span>
-    </div>
+      <nav className="fixed top-0 w-full bg-white/80 backdrop-blur-md border-b border-gray-100 z-50">
+        {/* max-w-none removes all width limits, px-0 removes side space */}
+        <div className="max-w-none w-full px-0 h-20 flex items-center justify-between">
 
-    {/* DESNA STRANA: Linkovi i Poziv */}
-    <div className="flex items-center gap-4">
-      <div className="hidden md:flex items-center gap-8 font-medium text-gray-600">
-        <a href="#about" onClick={(e) => scrollToSection(e, 'about')} className="hover:text-blue-600 transition">O nama</a>
-        <a href="#services" onClick={(e) => scrollToSection(e, 'services')} className="hover:text-blue-600 transition">Usluge</a>
-        <a href="#projects" onClick={(e) => scrollToSection(e, 'projects')} className="hover:text-blue-600 transition">Galerija</a>
-      </div>
-      <a href="tel:0606160776" className="flex items-center gap-2 bg-blue-600 text-white px-5 py-2.5 rounded-full font-bold text-sm shadow-md hover:bg-blue-700 transition">
-        <Phone size={16} fill="currentColor" />
-        <span className="hidden lg:inline">060 6160776</span>
-      </a>
-      <button onClick={() => setIsMenuOpen(true)} className="md:hidden text-gray-600 p-2">
-        <Menu size={28} />
-      </button>
-    </div>
-  </div>
-</nav>
+          {/* LEVA STRANA: Logo i Tekst - absolute left */}
+          <div className="flex items-center gap-2 cursor-pointer h-full" onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}>
+            <img
+              src={logo}
+              alt="Logo"
+              className="h-20 w-auto object-contain shrink-0"
+            />
+          </div>
+
+          {/* DESNA STRANA: Meni i Dugme - absolute right */}
+          <div className="flex items-center gap-4 h-full pr-4 md:pr-8">
+            <div className="hidden md:flex items-center gap-8 font-medium text-gray-600 mr-8">
+              <a href="#about" onClick={(e) => scrollToSection(e, 'about')} className="hover:text-blue-600 transition">O nama</a>
+              <a href="#services" onClick={(e) => scrollToSection(e, 'services')} className="hover:text-blue-600 transition">Usluge</a>
+              <a href="#projects" onClick={(e) => scrollToSection(e, 'projects')} className="hover:text-blue-600 transition">Galerija</a>
+            </div>
+
+            <a href="tel:0606160776" className="flex items-center gap-2 bg-blue-600 text-white px-5 py-2.5 rounded-full font-bold text-sm shadow-md hover:bg-blue-700 transition shrink-0">
+              <Phone size={16} fill="currentColor" />
+              <span className="hidden lg:inline">060 6160776</span>
+            </a>
+
+            <button onClick={() => setIsMenuOpen(true)} className="md:hidden text-gray-600 p-2">
+              <Menu size={28} />
+            </button>
+          </div>
+
+        </div>
+      </nav>
 
       {/* --- MOBILE SIDEBAR --- */}
       <div className={`fixed inset-0 z-[100] ${isMenuOpen ? 'visible' : 'invisible'}`}>
@@ -290,7 +290,7 @@ const ServicePage = () => {
       )}
 
       <footer className="py-20 border-t border-gray-100 text-center">
-        <p className="text-gray-400 font-medium">© 2026 VITKE MEDIA. All rights reserved.</p>
+        <p className="text-gray-400 font-medium">© 2026 Keramičar Beograd. All rights reserved.</p>
       </footer>
     </div>
   );
