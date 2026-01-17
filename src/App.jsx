@@ -16,7 +16,8 @@ const ServicePage = () => {
     { title: "Postavljanje sanitarija", description: "Postavljamo lavaboe, WC šolje i ostale sanitarije.", icon: <CheckCircle className="w-8 h-8 text-blue-600" /> },
     { title: "Zamena ventila, slavina i baterija", description: "Vršimo zamenu svih vrsta ventila, slavina i baterija.", icon: <CheckCircle className="w-8 h-8 text-blue-600" /> },
     { title: "Otpušavanje sudopere", description: "Brzo i efikasno otpušavamo sudopere.", icon: <CheckCircle className="w-8 h-8 text-blue-600" /> },
-    { title: "Sečenje kade", description: "Sečemo kade kako bi se obezbedilo lakše korišćenje iste starijim sugrađanima.", icon: <MessageSquare className="w-8 h-8 text-blue-600" /> }
+    { title: "Sečenje kade", description: "Sečemo i adaptiramo kade kako bi se obezbedilo lakše korišćenje iste starijim sugrađanima.", icon: <MessageSquare className="w-8 h-8 text-blue-600" /> },
+    { title: "Zidanje tuš kabina", description: "Zidamo tuš kabine i postavljamo ulazni prag u kabinu po Vašoj želji.", icon: <MessageSquare className="w-8 h-8 text-blue-600" /> }
   ];
 
   const galleryItems = [
