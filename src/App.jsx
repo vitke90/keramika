@@ -16,6 +16,7 @@ const ServicePage = () => {
   const [selectedIndex, setSelectedIndex] = useState(null);
   const [isFullGalleryOpen, setIsFullGalleryOpen] = useState(false);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [carouselStart, setCarouselStart] = useState(0);
 
   // Unificirana klasa za naslove sekcija
   const sectionTitleStyle = "text-4xl md:text-4xl font-extrabold tracking-tight text-gray-900 mb-6";
@@ -90,6 +91,14 @@ const ServicePage = () => {
   const prevImg = (e) => {
     e?.stopPropagation();
     setSelectedIndex((prev) => (prev - 1 + galleryItems.length) % galleryItems.length);
+  };
+
+  const nextCarousel = () => {
+    setCarouselStart((prev) => (prev + 1) % galleryItems.length);
+  };
+
+  const prevCarousel = () => {
+    setCarouselStart((prev) => (prev - 1 + galleryItems.length) % galleryItems.length);
   };
 
   return (
@@ -222,28 +231,78 @@ const ServicePage = () => {
         </div>
       </section>
 
-      {/* --- GALLERY SECTION --- */}
-      <section id="projects" className="pt-20 pb-32 px-6 max-w-7xl mx-auto">
-        <div className="text-center mb-16">
-          <h2 className={sectionTitleStyle}>Galerija</h2>
+      {/* --- GALLERY SECTION WITH CORRECT CAROUSEL --- */}
+      <section id="projects" className="pt-20 pb-32 px-0 max-w-full mx-auto overflow-hidden bg-white">
+        <div className="text-center mb-16 px-6">
+          <h2 className={sectionTitleStyle}>Galerija radova</h2>
           <div className="w-full max-w-md h-[1.5px] bg-gradient-to-r from-transparent via-blue-600 to-transparent mx-auto mb-10"></div>
-          <p className="text-gray-500 text-lg font-medium">Pogledajte neke od naših radova.</p>
+          <p className="text-gray-500 text-lg font-medium">Prelistajte naše projekte. Kliknite na sliku za uvećan prikaz.</p>
         </div>
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-16">
-          {galleryItems.slice(0, 4).map((item, index) => (
-            <div key={item.id} className="group relative cursor-pointer overflow-hidden rounded-[2.5rem] bg-gray-100 aspect-[4/5] shadow-lg" onClick={() => setSelectedIndex(index)}>
-              <img src={item.img} alt={item.title} className="h-full w-full object-cover transition-transform duration-1000 group-hover:scale-110" />
-              <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-all duration-500 flex flex-col justify-end p-10">
-                <p className="text-blue-400 text-xs font-bold uppercase mb-2 tracking-[0.2em]">{item.category}</p>
-                <h4 className="text-white text-2xl font-bold">{item.title}</h4>
-              </div>
-            </div>
+
+        <div className="relative group px-4 md:px-16">
+          {/* Strelica LEVO - Ispravljena logika */}
+          <button 
+            onClick={() => setCarouselStart((prev) => (prev - 1 + galleryItems.length) % galleryItems.length)}
+            className="absolute left-2 md:left-6 top-1/2 -translate-y-1/2 z-40 bg-white/90 p-4 rounded-full shadow-2xl hover:bg-blue-600 hover:text-white transition-all duration-300 border border-gray-100"
+          >
+            <ChevronLeft size={32} />
+          </button>
+
+          {/* Kontejner za slike */}
+          <div className="flex gap-4 md:gap-6 overflow-hidden">
+            {[0, 1, 2, 3].map((offset) => {
+              // Ova formula osigurava da uvek imamo 4 ispravne slike u nizu (Infinite loop)
+              const itemIndex = (carouselStart + offset) % galleryItems.length;
+              const item = galleryItems[itemIndex];
+
+              return (
+                <div 
+                  key={`carousel-${item.id}-${offset}`} 
+                  className={`
+                    relative cursor-pointer overflow-hidden rounded-[2.5rem] bg-gray-100 aspect-[4/5] shadow-lg transition-all duration-500 transform hover:scale-[1.02]
+                    ${offset === 0 ? 'w-full' : 'hidden'} 
+                    md:block md:w-1/4
+                  `}
+                  onClick={() => setSelectedIndex(itemIndex)}
+                >
+                  <img 
+                    src={item.img} 
+                    alt={item.title} 
+                    className="h-full w-full object-cover transition-transform duration-1000 hover:scale-110" 
+                    style={{ imageRendering: 'auto' }}
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent flex flex-col justify-end p-8 opacity-100 md:opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                    <p className="text-blue-400 text-xs font-bold uppercase mb-1 tracking-widest">{item.category}</p>
+                    <h4 className="text-white text-lg font-bold leading-tight">{item.title}</h4>
+                  </div>
+                </div>
+              );
+            })}
+          </div>
+
+          {/* Strelica DESNO */}
+          <button 
+            onClick={() => setCarouselStart((prev) => (prev + 1) % galleryItems.length)}
+            className="absolute right-2 md:right-6 top-1/2 -translate-y-1/2 z-40 bg-white/90 p-4 rounded-full shadow-2xl hover:bg-blue-600 hover:text-white transition-all duration-300 border border-gray-100"
+          >
+            <ChevronRight size={32} />
+          </button>
+        </div>
+
+        {/* Indikatori (Tačkice) ispod carousela za lakšu navigaciju */}
+        <div className="flex justify-center gap-2 mt-8">
+          {galleryItems.map((_, i) => (
+            <div 
+              key={i} 
+              className={`h-1.5 transition-all duration-300 rounded-full ${carouselStart === i ? 'w-8 bg-blue-600' : 'w-2 bg-gray-200'}`}
+            />
           ))}
         </div>
-        <div className="flex justify-center">
-          <button onClick={() => setIsFullGalleryOpen(true)} className="group flex items-center gap-4 bg-gray-900 text-white px-10 py-5 rounded-full hover:bg-blue-600 transition-all duration-500 shadow-2xl transform hover:-translate-y-1">
+
+        <div className="flex justify-center mt-12">
+          <button onClick={() => setIsFullGalleryOpen(true)} className="group flex items-center gap-4 bg-gray-900 text-white px-10 py-5 rounded-full hover:bg-blue-600 transition-all duration-500 shadow-2xl">
             <Maximize2 size={22} className="group-hover:rotate-90 transition-transform duration-700" />
-            <span className="font-bold uppercase tracking-widest text-sm">Prikaži sve slike</span>
+            <span className="font-bold uppercase tracking-widest text-sm">Prikaži celu galeriju ({galleryItems.length})</span>
           </button>
         </div>
       </section>
