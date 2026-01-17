@@ -119,14 +119,16 @@ const ServicePage = () => {
     const isRightSwipe = distance < -50;
 
     if (isLeftSwipe) {
-      nextCarousel();
+      if (selectedIndex !== null) nextImg();
+      else nextCarousel();
     } else if (isRightSwipe) {
-      prevCarousel();
+      if (selectedIndex !== null) prevImg();
+      else prevCarousel();
     }
   };
 
   return (
-    <div className="min-h-screen bg-white text-gray-900 selection:bg-blue-100 selection:text-blue-900" style={{ fontFamily: "'Roboto', sans-serif" }}>      {/* Google Fonts - Outfit */}
+    <div className="min-h-screen bg-white text-gray-900 selection:bg-blue-100 selection:text-blue-900" style={{ fontFamily: "'Roboto', sans-serif" }}>
       <style>
         {`@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700;900&display=swap');
         body { font-family: 'Roboto', sans-serif; }`}
@@ -134,36 +136,24 @@ const ServicePage = () => {
 
       {/* --- HEADER --- */}
       <nav className="fixed top-0 w-full bg-white/80 backdrop-blur-md border-b border-gray-100 z-50">
-        {/* max-w-none removes all width limits, px-0 removes side space */}
         <div className="max-w-none w-full px-0 h-20 flex items-center justify-between">
-
-          {/* LEVA STRANA: Logo i Tekst - absolute left */}
           <div className="flex items-center gap-2 cursor-pointer h-full" onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}>
-            <img
-              src={logo}
-              alt="Logo"
-              className="h-20 w-auto object-contain shrink-0"
-            />
+            <img src={logo} alt="Logo" className="h-20 w-auto object-contain shrink-0" />
           </div>
-
-          {/* DESNA STRANA: Meni i Dugme - absolute right */}
           <div className="flex items-center gap-4 h-full pr-4 md:pr-8">
             <div className="hidden md:flex items-center gap-8 font-medium text-gray-600 mr-8">
               <a href="#about" onClick={(e) => scrollToSection(e, 'about')} className="hover:text-blue-600 transition">O nama</a>
               <a href="#services" onClick={(e) => scrollToSection(e, 'services')} className="hover:text-blue-600 transition">Usluge</a>
               <a href="#projects" onClick={(e) => scrollToSection(e, 'projects')} className="hover:text-blue-600 transition">Galerija</a>
             </div>
-
             <a href="tel:0606160776" className="flex items-center gap-2 bg-blue-600 text-white px-5 py-2.5 rounded-full font-bold text-sm shadow-md hover:bg-blue-700 transition shrink-0">
               <Phone size={16} fill="currentColor" />
               <span className="hidden lg:inline">060 6160776</span>
             </a>
-
             <button onClick={() => setIsMenuOpen(true)} className="md:hidden text-gray-600 p-2">
               <Menu size={28} />
             </button>
           </div>
-
         </div>
       </nav>
 
@@ -190,30 +180,15 @@ const ServicePage = () => {
 
       {/* Hero Section */}
       <section className="relative pt-48 pb-24 px-6 text-center overflow-hidden bg-white">
-
-        {/* POZADINSKA SLIKA - Pojačana vidljivost */}
-        <div
-          className="absolute inset-0 z-0 opacity-40 grayscale-[20%]"
-          style={{
-            backgroundImage: `url(${photo1})`,
-            backgroundSize: 'cover',
-            backgroundPosition: 'center',
-          }}
-        ></div>
-
-        {/* OVERLAY - Gradijent koji čuva čitljivost teksta u sredini */}
+        <div className="absolute inset-0 z-0 opacity-40 grayscale-[20%]" style={{ backgroundImage: `url(${photo1})`, backgroundSize: 'cover', backgroundPosition: 'center' }}></div>
         <div className="absolute inset-0 z-10 bg-white/40 backdrop-blur-[2px]"></div>
-
-        {/* SADRŽAJ - Sa tvojim originalnim tekstom i senkom za čitljivost */}
         <div className="relative z-20 animate-in fade-in slide-in-from-bottom-8 duration-1000">
           <h1 className="text-4xl md:text-6xl font-black mb-6 tracking-tight leading-tight text-gray-900 drop-shadow-sm font-roboto uppercase">
             Keramičar i vodoinstalater <br /><span className="text-blue-600">Beograd</span>
           </h1>
-
           <p className="text-xl text-gray-800 max-w-2xl mx-auto mb-10 font-bold drop-shadow-sm">
             Renoviranje kupatila i kuhinja? Zapušena sudopera? Curenje ventila i zamena slavina? Brzo i efikasno izvođenje radova.
           </p>
-
           <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
             <a href="tel:0606160776" className="w-full sm:w-auto flex items-center justify-center gap-2 bg-gray-900 text-white px-8 py-4 rounded-full font-bold hover:bg-gray-800 transition-all shadow-lg">
               <Phone size={20} /> Pozovite 0606160776
@@ -255,7 +230,7 @@ const ServicePage = () => {
         </div>
       </section>
 
-      {/* --- GALLERY SECTION WITH CORRECT CAROUSEL --- */}
+      {/* --- GALLERY SECTION --- */}
       <section id="projects" className="pt-20 pb-32 px-0 max-w-full mx-auto overflow-hidden bg-white">
         <div className="text-center mb-16 px-6">
           <h2 className={sectionTitleStyle}>Galerija radova</h2>
@@ -264,40 +239,17 @@ const ServicePage = () => {
         </div>
 
         <div className="relative group px-4 md:px-16">
-          {/* Strelica LEVO - Ispravljena logika */}
-          <button 
-            onClick={() => setCarouselStart((prev) => (prev - 1 + galleryItems.length) % galleryItems.length)}
-            className="absolute left-2 md:left-6 top-1/2 -translate-y-1/2 z-40 bg-white/90 p-4 rounded-full shadow-2xl hover:bg-blue-600 hover:text-white transition-all duration-300 border border-gray-100"
-          >
+          <button onClick={prevCarousel} className="absolute left-2 md:left-6 top-1/2 -translate-y-1/2 z-40 bg-white/90 p-4 rounded-full shadow-2xl hover:bg-blue-600 hover:text-white transition-all duration-300 border border-gray-100">
             <ChevronLeft size={32} />
           </button>
 
-          {/* Kontejner za slike sa Swipe podrškom */}
-          <div 
-            className="flex gap-4 md:gap-6 overflow-hidden touch-pan-y"
-            onTouchStart={handleTouchStart}
-            onTouchMove={handleTouchMove}
-            onTouchEnd={handleTouchEnd}
-          >
+          <div className="flex gap-4 md:gap-6 overflow-hidden touch-pan-y" onTouchStart={handleTouchStart} onTouchMove={handleTouchMove} onTouchEnd={handleTouchEnd}>
             {[0, 1, 2, 3].map((offset) => {
               const itemIndex = (carouselStart + offset) % galleryItems.length;
               const item = galleryItems[itemIndex];
-
               return (
-                <div 
-                  key={`carousel-${item.id}-${offset}`} 
-                  className={`
-                    relative cursor-pointer overflow-hidden rounded-[2.5rem] bg-gray-100 aspect-[4/5] shadow-lg transition-all duration-500 transform
-                    ${offset === 0 ? 'w-full shrink-0' : 'hidden'} 
-                    md:block md:w-1/4 md:shrink-0
-                  `}
-                  onClick={() => setSelectedIndex(itemIndex)}
-                >
-                  <img 
-                    src={item.img} 
-                    alt={item.title} 
-                    className="h-full w-full object-cover" 
-                  />
+                <div key={`carousel-${item.id}-${offset}`} className={`relative cursor-pointer overflow-hidden rounded-[2.5rem] bg-gray-100 aspect-[4/5] shadow-lg transition-all duration-500 transform ${offset === 0 ? 'w-full shrink-0' : 'hidden'} md:block md:w-1/4 md:shrink-0`} onClick={() => setSelectedIndex(itemIndex)}>
+                  <img src={item.img} alt={item.title} className="h-full w-full object-cover transition-transform duration-1000 hover:scale-110" />
                   <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent flex flex-col justify-end p-8 opacity-100 md:opacity-0 group-hover:opacity-100 transition-opacity duration-300">
                     <p className="text-blue-400 text-xs font-bold uppercase mb-1 tracking-widest">{item.category}</p>
                     <h4 className="text-white text-lg font-bold leading-tight">{item.title}</h4>
@@ -307,22 +259,14 @@ const ServicePage = () => {
             })}
           </div>
 
-          {/* Strelica DESNO */}
-          <button 
-            onClick={() => setCarouselStart((prev) => (prev + 1) % galleryItems.length)}
-            className="absolute right-2 md:right-6 top-1/2 -translate-y-1/2 z-40 bg-white/90 p-4 rounded-full shadow-2xl hover:bg-blue-600 hover:text-white transition-all duration-300 border border-gray-100"
-          >
+          <button onClick={nextCarousel} className="absolute right-2 md:right-6 top-1/2 -translate-y-1/2 z-40 bg-white/90 p-4 rounded-full shadow-2xl hover:bg-blue-600 hover:text-white transition-all duration-300 border border-gray-100">
             <ChevronRight size={32} />
           </button>
         </div>
 
-        {/* Indikatori (Tačkice) ispod carousela za lakšu navigaciju */}
         <div className="flex justify-center gap-2 mt-8">
           {galleryItems.map((_, i) => (
-            <div 
-              key={i} 
-              className={`h-1.5 transition-all duration-300 rounded-full ${carouselStart === i ? 'w-8 bg-blue-600' : 'w-2 bg-gray-200'}`}
-            />
+            <div key={i} className={`h-1.5 transition-all duration-300 rounded-full ${carouselStart === i ? 'w-8 bg-blue-600' : 'w-2 bg-gray-200'}`} />
           ))}
         </div>
 
@@ -334,7 +278,7 @@ const ServicePage = () => {
         </div>
       </section>
 
-      {/* ... (Full Gallery i Lightbox ostaju isti, font se automatski primenjuje) ... */}
+      {/* --- FULL GALLERY VIEW --- */}
       {isFullGalleryOpen && (
         <div className="fixed inset-0 z-[110] bg-white overflow-y-auto">
           <div className="sticky top-0 bg-white/95 backdrop-blur-2xl z-20 px-6 py-8 border-b border-gray-100">
@@ -360,17 +304,35 @@ const ServicePage = () => {
         </div>
       )}
 
+      {/* --- LIGHTBOX (IZMENJEN: SAMO SLIKA) --- */}
       {selectedIndex !== null && (
-        <div className="fixed inset-0 z-[120] flex items-center justify-center bg-white/80 backdrop-blur-3xl p-6" onClick={() => setSelectedIndex(null)}>
-          <button className="absolute top-10 right-10 text-gray-400 hover:text-blue-600" onClick={() => setSelectedIndex(null)}><X size={48} /></button>
-          <button className="absolute left-6 text-gray-300 hover:text-blue-600" onClick={prevImg}><ChevronLeft size={80} /></button>
-          <button className="absolute right-6 text-gray-300 hover:text-blue-600" onClick={nextImg}><ChevronRight size={80} /></button>
-          <div className="max-w-6xl w-full flex flex-col items-center" onClick={(e) => e.stopPropagation()}>
-            <img src={galleryItems[selectedIndex].img} className="max-h-[75vh] w-auto rounded-[3rem] shadow-2xl border-[12px] border-white" alt="View" />
-            <div className="mt-10 text-center">
-              <span className="text-blue-600 text-sm font-black uppercase tracking-widest">{galleryItems[selectedIndex].category}</span>
-              <h3 className="text-5xl font-extrabold text-gray-900 mt-3">{galleryItems[selectedIndex].title}</h3>
-            </div>
+        <div 
+          className="fixed inset-0 z-[120] flex items-center justify-center bg-black/95 backdrop-blur-xl touch-none" 
+          onClick={() => setSelectedIndex(null)}
+          onTouchStart={handleTouchStart}
+          onTouchMove={handleTouchMove}
+          onTouchEnd={handleTouchEnd}
+        >
+          {/* Dugme za zatvaranje */}
+          <button className="absolute top-6 right-6 text-white/50 hover:text-white z-[130]" onClick={() => setSelectedIndex(null)}>
+            <X size={40} />
+          </button>
+
+          {/* Strelice (Desktop) */}
+          <button className="hidden md:block absolute left-8 text-white/30 hover:text-white transition-all z-[130]" onClick={prevImg}>
+            <ChevronLeft size={64} strokeWidth={1.5} />
+          </button>
+          <button className="hidden md:block absolute right-8 text-white/30 hover:text-white transition-all z-[130]" onClick={nextImg}>
+            <ChevronRight size={64} strokeWidth={1.5} />
+          </button>
+
+          {/* Samo Slika (Bez naslova i opisa) */}
+          <div className="w-full h-full flex items-center justify-center p-2 md:p-12" onClick={(e) => e.stopPropagation()}>
+            <img 
+              src={galleryItems[selectedIndex].img} 
+              className="max-h-full max-w-full object-contain shadow-2xl" 
+              alt="Uvećan prikaz" 
+            />
           </div>
         </div>
       )}
