@@ -14,7 +14,10 @@ import photo10 from './photos/photo10.jpg'
 const ServicePage = () => {
   const [selectedIndex, setSelectedIndex] = useState(null);
   const [isFullGalleryOpen, setIsFullGalleryOpen] = useState(false);
-  const [isMenuOpen, setIsMenuOpen] = useState(false); // Stanje za mobilni meni
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
+
+  // Unificirana klasa za naslove sekcija
+  const sectionTitleStyle = "text-4xl md:text-4xl font-extrabold tracking-tight text-gray-900 mb-6";
 
   const services = [
     { title: "Postavljanje pločica", description: "Postavljamo pločice u kuhinjama, hodnicima, kupatilima.", icon: <Globe className="w-8 h-8 text-blue-600" /> },
@@ -40,30 +43,26 @@ const ServicePage = () => {
 
   const scrollToSection = (e, id) => {
     e.preventDefault();
-    setIsMenuOpen(false); // Zatvori meni nakon klika na link
+    setIsMenuOpen(false);
     const element = document.getElementById(id);
     if (!element) return;
-
     const targetPosition = element.getBoundingClientRect().top + window.pageYOffset - 80;
     const startPosition = window.pageYOffset;
     const distance = targetPosition - startPosition;
     const duration = 1200;
     let start = null;
-
     const ease = (t, b, c, d) => {
       t /= d / 2;
       if (t < 1) return (c / 2) * t * t * t + b;
       t -= 2;
       return (c / 2) * (t * t * t + 2) + b;
     };
-
     const step = (timestamp) => {
       if (!start) start = timestamp;
       const progress = timestamp - start;
       window.scrollTo(0, ease(progress, startPosition, distance, duration));
       if (progress < duration) window.requestAnimationFrame(step);
     };
-
     window.requestAnimationFrame(step);
   };
 
@@ -93,9 +92,14 @@ const ServicePage = () => {
   };
 
   return (
-    <div className="min-h-screen bg-white text-gray-900 font-sans">
+    <div className="min-h-screen bg-white text-gray-900 font-sans selection:bg-blue-100 selection:text-blue-900">
+      {/* Google Fonts - Outfit */}
+      <style>
+        {`@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&display=swap');
+          body { font-family: 'Outfit', sans-serif; }`}
+      </style>
 
-      {/* --- HEADER / NAVIGATION --- */}
+      {/* --- HEADER --- */}
       <nav className="fixed top-0 w-full bg-white/80 backdrop-blur-md border-b border-gray-100 z-50">
         <div className="max-w-7xl mx-auto px-6 h-20 flex items-center justify-between">
           <div className="flex items-center gap-2 cursor-pointer" onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}>
@@ -104,21 +108,16 @@ const ServicePage = () => {
             </div>
             <span className="text-lg md:text-xl font-bold tracking-tight text-gray-900 uppercase">Keramičar i Vodoinstalater</span>
           </div>
-
           <div className="flex items-center gap-4">
-            {/* Desktop Links */}
             <div className="hidden md:flex items-center gap-8 font-medium text-gray-600">
               <a href="#about" onClick={(e) => scrollToSection(e, 'about')} className="hover:text-blue-600 transition">O nama</a>
               <a href="#services" onClick={(e) => scrollToSection(e, 'services')} className="hover:text-blue-600 transition">Usluge</a>
               <a href="#projects" onClick={(e) => scrollToSection(e, 'projects')} className="hover:text-blue-600 transition">Galerija</a>
             </div>
-
-            <a href="tel:0606160776" className="flex items-center gap-2 bg-blue-600 text-white px-4 py-2 rounded-full font-bold text-sm shadow-md">
+            <a href="tel:0606160776" className="flex items-center gap-2 bg-blue-600 text-white px-5 py-2.5 rounded-full font-bold text-sm shadow-md hover:bg-blue-700 transition">
               <Phone size={16} fill="currentColor" />
               <span className="hidden lg:inline">060 6160776</span>
             </a>
-
-            {/* Mobile Menu Trigger */}
             <button onClick={() => setIsMenuOpen(true)} className="md:hidden text-gray-600 p-2">
               <Menu size={28} />
             </button>
@@ -126,41 +125,33 @@ const ServicePage = () => {
         </div>
       </nav>
 
-      {/* --- MOBILE SIDEBAR MENU --- */}
-      <div className={`fixed inset-0 z-[100] transition-visibility duration-300 ${isMenuOpen ? 'visible' : 'invisible'}`}>
-        {/* Dark Overlay (clickable to close) */}
-        <div
-          className={`absolute inset-0 bg-black/20 backdrop-blur-sm transition-opacity duration-300 ${isMenuOpen ? 'opacity-100' : 'opacity-0'}`}
-          onClick={() => setIsMenuOpen(false)}
-        />
-
-        {/* Menu Panel */}
-        <div className={`absolute right-0 top-0 h-full w-[65%] max-w-sm bg-white shadow-2xl transition-transform duration-300 ease-out p-8 ${isMenuOpen ? 'translate-x-0' : 'translate-x-full'}`}>
+      {/* --- MOBILE SIDEBAR --- */}
+      <div className={`fixed inset-0 z-[100] ${isMenuOpen ? 'visible' : 'invisible'}`}>
+        <div className={`absolute inset-0 bg-black/40 backdrop-blur-sm transition-opacity duration-300 ${isMenuOpen ? 'opacity-100' : 'opacity-0'}`} onClick={() => setIsMenuOpen(false)} />
+        <div className={`absolute right-0 top-0 h-full w-[75%] max-w-sm bg-white shadow-2xl transition-transform duration-300 ease-out p-8 ${isMenuOpen ? 'translate-x-0' : 'translate-x-full'}`}>
           <div className="flex justify-between items-center mb-12">
             <span className="font-bold text-blue-600 uppercase tracking-widest">Meni</span>
             <button onClick={() => setIsMenuOpen(false)} className="p-2 text-gray-500 hover:text-black">
               <X size={32} />
             </button>
           </div>
-
           <div className="flex flex-col gap-8 text-xl font-bold">
             <a href="#about" onClick={(e) => scrollToSection(e, 'about')} className="flex items-center justify-between border-b pb-4 border-gray-50">O nama <ChevronRight size={20} className="text-gray-300" /></a>
             <a href="#services" onClick={(e) => scrollToSection(e, 'services')} className="flex items-center justify-between border-b pb-4 border-gray-50">Usluge <ChevronRight size={20} className="text-gray-300" /></a>
             <a href="#projects" onClick={(e) => scrollToSection(e, 'projects')} className="flex items-center justify-between border-b pb-4 border-gray-50">Galerija <ChevronRight size={20} className="text-gray-300" /></a>
-            <a href="tel:0606160776" className="mt-4 flex items-center gap-3 bg-gray-900 text-white p-5 rounded-2xl justify-center shadow-xl shadow-gray-200">
-              <Phone size={24} fill="currentColor" />
-              060 6160776
+            <a href="tel:0606160776" className="mt-4 flex items-center gap-3 bg-gray-900 text-white p-5 rounded-2xl justify-center shadow-xl">
+              <Phone size={24} fill="currentColor" /> 060 6160776
             </a>
           </div>
         </div>
       </div>
 
-      {/* Hero Section */}
+      {/* --- HERO SECTION --- */}
       <section className="pt-48 pb-24 px-6 text-center animate-in fade-in slide-in-from-bottom-8 duration-1000">
-        <h1 className="text-5xl md:text-6xl font-extrabold mb-6 tracking-tight leading-tight">
+        <h1 className="text-5xl md:text-7xl font-extrabold mb-6 tracking-tighter leading-tight text-gray-900">
           Keramičar i vodoinstalater <br /><span className="text-blue-600">Beograd</span>
         </h1>
-        <p className="text-xl text-gray-500 max-w-2xl mx-auto mb-10">
+        <p className="text-xl text-gray-500 max-w-2xl mx-auto mb-10 font-medium">
           Renoviranje kupatila i kuhinja? Zapušena sudopera? Curenje ventila i zamena slavina? Brzo i efikasno izvođenje radova.
         </p>
         <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
@@ -173,25 +164,27 @@ const ServicePage = () => {
         </div>
       </section>
 
-      {/* About Section */}
-      <section id="about" className="py-32 bg-white px-6 border-t border-gray-50">
+      {/* --- ABOUT SECTION --- */}
+      <section id="about" className="py-24 bg-white px-6 border-t border-gray-50">
         <div className="max-w-4xl mx-auto text-center">
-          <h2 className="text-3xl font-bold mb-8">O nama</h2>
-          <p className="text-lg text-gray-600 leading-relaxed">
+          <h2 className={sectionTitleStyle}>O nama</h2>
+          <div className="w-full max-w-md h-[1.5px] bg-gradient-to-r from-transparent via-blue-600 to-transparent mx-auto mb-10"></div>          
+          <p className="text-xl text-gray-600 leading-relaxed font-medium">
             Ekipa sa iskustvom od preko 30 godina u poslovima keramike, vodovoda i izolacije. Vršimo radove na teritoriji grada Beograda.
           </p>
         </div>
       </section>
 
-      {/* Services Section */}
-      <section id="services" className="pt-20 pb-32 bg-gray-50 px-6"> {/* Promenjeno py-32 u pt-20 pb-32 */}
+      {/* --- SERVICES SECTION --- */}
+      <section id="services" className="pt-20 pb-32 bg-gray-50 px-6">
         <div className="max-w-6xl mx-auto text-center">
-          <h2 className="text-3xl font-bold mb-16 uppercase tracking-widest text-gray-400">Naše usluge</h2>
+          <h2 className={sectionTitleStyle}>Naše usluge</h2>
+          <div className="w-full max-w-md h-[1.5px] bg-gradient-to-r from-transparent via-blue-600 to-transparent mx-auto mb-10"></div>          
           <div className="grid md:grid-cols-3 gap-10 text-left">
             {services.map((s, i) => (
-              <div key={i} className="bg-white p-10 rounded-3xl shadow-sm hover:shadow-2xl transition-all duration-500 border border-gray-100">
-                <div className="w-16 h-16 bg-blue-50 rounded-2xl flex items-center justify-center mb-8">
-                  {s.icon}
+              <div key={i} className="bg-white p-10 rounded-3xl shadow-sm hover:shadow-xl transition-all duration-500 border border-gray-100 group">
+                <div className="w-16 h-16 bg-blue-50 rounded-2xl flex items-center justify-center mb-8 group-hover:bg-blue-600 group-hover:text-white transition-colors duration-300">
+                  {React.cloneElement(s.icon, { className: "w-8 h-8 group-hover:text-white transition-colors" })}
                 </div>
                 <h3 className="text-2xl font-bold mb-4">{s.title}</h3>
                 <p className="text-gray-500 leading-relaxed text-lg">{s.description}</p>
@@ -201,20 +194,16 @@ const ServicePage = () => {
         </div>
       </section>
 
-      {/* Gallery Section */}
-      <section id="projects" className="pt-20 pb-32 px-6 max-w-7xl mx-auto"> {/* Promenjeno py-32 u pt-20 pb-32 */}
+      {/* --- GALLERY SECTION --- */}
+      <section id="projects" className="pt-20 pb-32 px-6 max-w-7xl mx-auto">
         <div className="text-center mb-16">
-          <h2 className="text-4xl font-bold tracking-tight mb-4">Galerija</h2>
-          <div className="w-20 h-1.5 bg-blue-600 mx-auto rounded-full mb-4"></div>
-          <p className="text-gray-500 text-lg">Pogledajte neke od naših radova.</p>
+          <h2 className={sectionTitleStyle}>Galerija</h2>
+          <div className="w-full max-w-md h-[1.5px] bg-gradient-to-r from-transparent via-blue-600 to-transparent mx-auto mb-10"></div>          
+          <p className="text-gray-500 text-lg font-medium">Pogledajte neke od naših radova.</p>
         </div>
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-16">
           {galleryItems.slice(0, 4).map((item, index) => (
-            <div
-              key={item.id}
-              className="group relative cursor-pointer overflow-hidden rounded-[2.5rem] bg-gray-100 aspect-[4/5] shadow-lg"
-              onClick={() => setSelectedIndex(index)}
-            >
+            <div key={item.id} className="group relative cursor-pointer overflow-hidden rounded-[2.5rem] bg-gray-100 aspect-[4/5] shadow-lg" onClick={() => setSelectedIndex(index)}>
               <img src={item.img} alt={item.title} className="h-full w-full object-cover transition-transform duration-1000 group-hover:scale-110" />
               <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-all duration-500 flex flex-col justify-end p-10">
                 <p className="text-blue-400 text-xs font-bold uppercase mb-2 tracking-[0.2em]">{item.category}</p>
@@ -223,21 +212,17 @@ const ServicePage = () => {
             </div>
           ))}
         </div>
-
         <div className="flex justify-center">
-          <button
-            onClick={() => setIsFullGalleryOpen(true)}
-            className="group flex items-center gap-4 bg-gray-900 text-white px-10 py-5 rounded-full hover:bg-blue-600 transition-all duration-500 shadow-2xl hover:shadow-blue-300 transform hover:-translate-y-1"
-          >
+          <button onClick={() => setIsFullGalleryOpen(true)} className="group flex items-center gap-4 bg-gray-900 text-white px-10 py-5 rounded-full hover:bg-blue-600 transition-all duration-500 shadow-2xl transform hover:-translate-y-1">
             <Maximize2 size={22} className="group-hover:rotate-90 transition-transform duration-700" />
             <span className="font-bold uppercase tracking-widest text-sm">Prikaži sve slike</span>
           </button>
         </div>
       </section>
 
-      {/* Full Gallery Overlay */}
+      {/* ... (Full Gallery i Lightbox ostaju isti, font se automatski primenjuje) ... */}
       {isFullGalleryOpen && (
-        <div className="fixed inset-0 z-[110] bg-white overflow-y-auto animate-in slide-in-from-bottom duration-700 ease-out">
+        <div className="fixed inset-0 z-[110] bg-white overflow-y-auto">
           <div className="sticky top-0 bg-white/95 backdrop-blur-2xl z-20 px-6 py-8 border-b border-gray-100">
             <div className="max-w-7xl mx-auto flex justify-between items-center">
               <div>
@@ -252,7 +237,7 @@ const ServicePage = () => {
           <div className="max-w-7xl mx-auto p-8 lg:p-20">
             <div className="columns-1 sm:columns-2 lg:columns-3 gap-8 space-y-8">
               {galleryItems.map((item, index) => (
-                <div key={`full-${item.id}`} className="break-inside-avoid rounded-3xl overflow-hidden cursor-zoom-in transition-all duration-500" onClick={() => { setSelectedIndex(index); setIsFullGalleryOpen(false); }}>
+                <div key={`full-${item.id}`} className="break-inside-avoid rounded-3xl overflow-hidden cursor-zoom-in" onClick={() => { setSelectedIndex(index); setIsFullGalleryOpen(false); }}>
                   <img src={item.img} alt={item.title} className="w-full h-auto rounded-3xl shadow-xl border border-gray-100" />
                 </div>
               ))}
@@ -261,13 +246,12 @@ const ServicePage = () => {
         </div>
       )}
 
-      {/* Lightbox Overlay */}
       {selectedIndex !== null && (
-        <div className="fixed inset-0 z-[120] flex items-center justify-center bg-white/80 backdrop-blur-3xl p-6 transition-all duration-500 animate-in fade-in" onClick={() => setSelectedIndex(null)}>
+        <div className="fixed inset-0 z-[120] flex items-center justify-center bg-white/80 backdrop-blur-3xl p-6" onClick={() => setSelectedIndex(null)}>
           <button className="absolute top-10 right-10 text-gray-400 hover:text-blue-600" onClick={() => setSelectedIndex(null)}><X size={48} /></button>
           <button className="absolute left-6 text-gray-300 hover:text-blue-600" onClick={prevImg}><ChevronLeft size={80} /></button>
           <button className="absolute right-6 text-gray-300 hover:text-blue-600" onClick={nextImg}><ChevronRight size={80} /></button>
-          <div className="max-w-6xl w-full flex flex-col items-center animate-in zoom-in-95 duration-500" onClick={(e) => e.stopPropagation()}>
+          <div className="max-w-6xl w-full flex flex-col items-center" onClick={(e) => e.stopPropagation()}>
             <img src={galleryItems[selectedIndex].img} className="max-h-[75vh] w-auto rounded-[3rem] shadow-2xl border-[12px] border-white" alt="View" />
             <div className="mt-10 text-center">
               <span className="text-blue-600 text-sm font-black uppercase tracking-widest">{galleryItems[selectedIndex].category}</span>
