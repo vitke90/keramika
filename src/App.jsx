@@ -10,6 +10,7 @@ import photo7 from './photos/photo7.jpg'
 import photo8 from './photos/photo8.jpg'
 import photo9 from './photos/photo9.jpg'
 import photo10 from './photos/photo10.jpg'
+import logo from './photos/logo.JPG';
 
 const ServicePage = () => {
   const [selectedIndex, setSelectedIndex] = useState(null);
@@ -99,30 +100,39 @@ const ServicePage = () => {
       </style>
 
       {/* --- HEADER --- */}
-      <nav className="fixed top-0 w-full bg-white/80 backdrop-blur-md border-b border-gray-100 z-50">
-        <div className="max-w-7xl mx-auto px-6 h-20 flex items-center justify-between">
-          <div className="flex items-center gap-2 cursor-pointer" onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}>
-            <div className="w-10 h-10 bg-blue-600 rounded-lg flex items-center justify-center shrink-0">
-              <span className="text-white font-bold text-xl">V</span>
-            </div>
-            <span className="text-lg md:text-l font-bold tracking-tight text-gray-800 uppercase">Keramičar i Vodoinstalater</span>
-          </div>
-          <div className="flex items-center gap-4">
-            <div className="hidden md:flex items-center gap-8 font-medium text-gray-600">
-              <a href="#about" onClick={(e) => scrollToSection(e, 'about')} className="hover:text-blue-600 transition">O nama</a>
-              <a href="#services" onClick={(e) => scrollToSection(e, 'services')} className="hover:text-blue-600 transition">Usluge</a>
-              <a href="#projects" onClick={(e) => scrollToSection(e, 'projects')} className="hover:text-blue-600 transition">Galerija</a>
-            </div>
-            <a href="tel:0606160776" className="flex items-center gap-2 bg-blue-600 text-white px-5 py-2.5 rounded-full font-bold text-sm shadow-md hover:bg-blue-700 transition">
-              <Phone size={16} fill="currentColor" />
-              <span className="hidden lg:inline">060 6160776</span>
-            </a>
-            <button onClick={() => setIsMenuOpen(true)} className="md:hidden text-gray-600 p-2">
-              <Menu size={28} />
-            </button>
-          </div>
-        </div>
-      </nav>
+<nav className="fixed top-0 w-full bg-white/80 backdrop-blur-md border-b border-gray-100 z-50">
+  <div className="max-w-7xl mx-auto px-6 h-20 flex items-center justify-between">
+    
+    {/* LEVA STRANA: Logo i Tekst */}
+    <div className="flex items-center gap-2 cursor-pointer h-full" onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}>
+      <img
+        src={logo}
+        alt="Logo"
+        // h-20 tera sliku da bude tačno 80px, object-fill ili cover je širi, object-contain je sigurniji
+        className="h-20 w-auto object-contain shrink-0" 
+      />
+      <span className="text-[13px] sm:text-sm md:text-base font-bold tracking-tight text-gray-800 uppercase whitespace-nowrap">
+        Keramičar i Vodoinstalater
+      </span>
+    </div>
+
+    {/* DESNA STRANA: Linkovi i Poziv */}
+    <div className="flex items-center gap-4">
+      <div className="hidden md:flex items-center gap-8 font-medium text-gray-600">
+        <a href="#about" onClick={(e) => scrollToSection(e, 'about')} className="hover:text-blue-600 transition">O nama</a>
+        <a href="#services" onClick={(e) => scrollToSection(e, 'services')} className="hover:text-blue-600 transition">Usluge</a>
+        <a href="#projects" onClick={(e) => scrollToSection(e, 'projects')} className="hover:text-blue-600 transition">Galerija</a>
+      </div>
+      <a href="tel:0606160776" className="flex items-center gap-2 bg-blue-600 text-white px-5 py-2.5 rounded-full font-bold text-sm shadow-md hover:bg-blue-700 transition">
+        <Phone size={16} fill="currentColor" />
+        <span className="hidden lg:inline">060 6160776</span>
+      </a>
+      <button onClick={() => setIsMenuOpen(true)} className="md:hidden text-gray-600 p-2">
+        <Menu size={28} />
+      </button>
+    </div>
+  </div>
+</nav>
 
       {/* --- MOBILE SIDEBAR --- */}
       <div className={`fixed inset-0 z-[100] ${isMenuOpen ? 'visible' : 'invisible'}`}>
@@ -147,17 +157,17 @@ const ServicePage = () => {
 
       {/* Hero Section */}
       <section className="relative pt-48 pb-24 px-6 text-center overflow-hidden bg-white">
-        
+
         {/* POZADINSKA SLIKA - Pojačana vidljivost */}
-        <div 
-          className="absolute inset-0 z-0 opacity-40 grayscale-[20%]" 
-          style={{ 
-            backgroundImage: `url(${photo1})`, 
+        <div
+          className="absolute inset-0 z-0 opacity-40 grayscale-[20%]"
+          style={{
+            backgroundImage: `url(${photo1})`,
             backgroundSize: 'cover',
             backgroundPosition: 'center',
           }}
         ></div>
-        
+
         {/* OVERLAY - Gradijent koji čuva čitljivost teksta u sredini */}
         <div className="absolute inset-0 z-10 bg-white/40 backdrop-blur-[2px]"></div>
 
@@ -166,11 +176,11 @@ const ServicePage = () => {
           <h1 className="text-4xl md:text-6xl font-black mb-6 tracking-tight leading-tight text-gray-900 drop-shadow-sm font-roboto uppercase">
             Keramičar i vodoinstalater <br /><span className="text-blue-600">Beograd</span>
           </h1>
-          
+
           <p className="text-xl text-gray-800 max-w-2xl mx-auto mb-10 font-bold drop-shadow-sm">
             Renoviranje kupatila i kuhinja? Zapušena sudopera? Curenje ventila i zamena slavina? Brzo i efikasno izvođenje radova.
           </p>
-          
+
           <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
             <a href="tel:0606160776" className="w-full sm:w-auto flex items-center justify-center gap-2 bg-gray-900 text-white px-8 py-4 rounded-full font-bold hover:bg-gray-800 transition-all shadow-lg">
               <Phone size={20} /> Pozovite 0606160776
