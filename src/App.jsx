@@ -11,9 +11,11 @@ const ServicePage = () => {
   const [isFullGalleryOpen, setIsFullGalleryOpen] = useState(false);
 
   const services = [
-    { title: "Web Development", description: "Custom high-performance websites.", icon: <Globe className="w-8 h-8 text-blue-600" /> },
-    { title: "Consulting", description: "Strategic advice to scale your business.", icon: <CheckCircle className="w-8 h-8 text-blue-600" /> },
-    { title: "Support", description: "24/7 dedicated maintenance.", icon: <MessageSquare className="w-8 h-8 text-blue-600" /> }
+    { title: "Postavljanje pločica", description: "Postavljamo pločice u kuhinjama, hodnicima, kupatilima.", icon: <Globe className="w-8 h-8 text-blue-600" /> },
+    { title: "Postavljanje sanitarija", description: "Postavljamo lavaboe, WC šolje i ostale sanitarije.", icon: <CheckCircle className="w-8 h-8 text-blue-600" /> },
+    { title: "Zamena ventila, slavina i baterija", description: "Vršimo zamenu svih vrsta ventila, slavina i baterija.", icon: <CheckCircle className="w-8 h-8 text-blue-600" /> },
+    { title: "Otpušavanje sudopere", description: "Brzo i efikasno otpušavamo sudopere.", icon: <CheckCircle className="w-8 h-8 text-blue-600" /> },
+    { title: "Sečenje kade", description: "Sečemo kade kako bi se obezbedilo lakše korišćenje iste starijim sugrađanima.", icon: <MessageSquare className="w-8 h-8 text-blue-600" /> }
   ];
 
   const galleryItems = [
@@ -90,12 +92,12 @@ const ServicePage = () => {
             <div className="w-10 h-10 bg-blue-600 rounded-lg flex items-center justify-center">
               <span className="text-white font-bold text-xl">V</span>
             </div>
-            <span className="text-xl font-bold tracking-tight text-gray-900 uppercase">Keramika i Vodovod</span>
+            <span className="text-xl font-bold tracking-tight text-gray-900 uppercase">Keramičar i Vodoinstalater</span>
           </div>
 
           <div className="hidden md:flex items-center gap-10 font-medium text-gray-600">
             <a href="#services" onClick={(e) => scrollToSection(e, 'services')} className="hover:text-blue-600 transition-colors duration-300">Usluge</a>
-            <a href="#projects" onClick={(e) => scrollToSection(e, 'projects')} className="hover:text-blue-600 transition-colors duration-300">Projekti</a>
+            <a href="#projects" onClick={(e) => scrollToSection(e, 'projects')} className="hover:text-blue-600 transition-colors duration-300">Galerija</a>
             <a href="#about" onClick={(e) => scrollToSection(e, 'about')} className="hover:text-blue-600 transition-colors duration-300">O nama</a>
           </div>
           <Menu className="md:hidden text-gray-600" />
@@ -105,10 +107,10 @@ const ServicePage = () => {
       {/* Hero Section */}
       <section className="pt-48 pb-24 px-6 text-center animate-in fade-in slide-in-from-bottom-8 duration-1000">
         <h1 className="text-5xl md:text-6xl font-extrabold mb-6 tracking-tight leading-tight">
-          Modern Solutions for <br /><span className="text-blue-600">Digital Growth</span>
+          Keramičar i vodoinstalater <br /><span className="text-blue-600">Beograd</span>
         </h1>
         <p className="text-xl text-gray-500 max-w-2xl mx-auto mb-10">
-          Helping businesses scale through expert web development and strategic consulting.
+        Renoviranje kupatila i kuhinja? Zapušena sudopera? Curenje ventila i zamena slavina? Brzo i efikasno izvođenje radova. 
         </p>
         <button 
           onClick={(e) => scrollToSection(e, 'projects')}
@@ -121,11 +123,9 @@ const ServicePage = () => {
       {/* About Section */}
       <section id="about" className="py-32 bg-white px-6">
         <div className="max-w-4xl mx-auto text-center">
-          <h2 className="text-3xl font-bold mb-8">About Us</h2>
+          <h2 className="text-3xl font-bold mb-8">O nama</h2>
           <p className="text-lg text-gray-600 leading-relaxed">
-            Vitke Media is a dedicated digital agency focused on craftsmanship and performance.
-            We believe that every project is a unique opportunity to combine design with
-            cutting-edge technology to create memorable experiences.
+          Ekipa sa iskustvom od preko 30 godina u poslovima keramike, vodovoda i izolacije. Vršimo radove na teritoriji grada Beograda.
           </p>
         </div>
       </section>
@@ -151,9 +151,9 @@ const ServicePage = () => {
       {/* --- GALLERY SECTION --- */}
       <section id="projects" className="py-32 px-6 max-w-7xl mx-auto">
         <div className="text-center mb-16">
-          <h2 className="text-4xl font-bold tracking-tight mb-4">Naša Galerija</h2>
+          <h2 className="text-4xl font-bold tracking-tight mb-4">Galerija</h2>
           <div className="w-20 h-1.5 bg-blue-600 mx-auto rounded-full mb-4"></div>
-          <p className="text-gray-500 text-lg">Pogledajte rezultate našeg rada i preciznosti.</p>
+          <p className="text-gray-500 text-lg">Pogledajte neke od naših radova.</p>
         </div>
 
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-16">
