@@ -31,16 +31,16 @@ const ServicePage = () => {
   ];
 
   const galleryItems = [
-    { id: 1, title: "Moderno Kupatilo", category: "Keramika", img: photo1 },
+    { id: 1, title: "Kupatilo", category: "Keramika", img: photo1 },
     { id: 2, title: "Instalacije", category: "Vodovod", img: photo2 },
     { id: 3, title: "Kupatilo sa visokim stepenikom za tuš kapinu", category: "Keramika", img: photo3 },
     { id: 4, title: "Kuhinja", category: "Keramika", img: photo4 },
-    { id: 5, title: "Moderno Kupatilo", category: "Keramika", img: photo5 },
-    { id: 6, title: "Moderno Kupatilo", category: "Keramika", img: photo6 },
+    { id: 5, title: "Kupatilo", category: "Keramika", img: photo5 },
+    { id: 6, title: "Kupatilo", category: "Keramika", img: photo6 },
     { id: 7, title: "Kupatilo sa niskim stepenikom za tuš kapinu", category: "Keramika", img: photo7 },
     { id: 8, title: "Kupatilo", category: "Keramika", img: photo8 },
     { id: 9, title: "Kuhinja", category: "Keramika", img: photo9 },
-    { id: 10, title: "Moderno Kupatilo", category: "Keramika", img: photo10 },
+    { id: 10, title: "Kupatilo", category: "Keramika", img: photo10 },
   ];
 
   const scrollToSection = (e, id) => {
