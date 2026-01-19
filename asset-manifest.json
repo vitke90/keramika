@@ -1,6 +1,6 @@
 {
   "files": {
-    "main.js": "/keramika/static/js/main.07322e02.js",
+    "main.js": "/keramika/static/js/main.908e19d0.js",
     "static/media/photo5.jpg": "/keramika/static/media/photo5.f03d02db6f635498e056.jpg",
     "static/media/photo2.jpg": "/keramika/static/media/photo2.77219f1fb8aea94489e1.jpg",
     "static/media/photo3.jpg": "/keramika/static/media/photo3.e7fd046ea17409a66946.jpg",
@@ -18,9 +18,9 @@
     "static/media/photo1.jpg": "/keramika/static/media/photo1.cdd86955e8d30c2b35c7.jpg",
     "static/media/logo.JPG": "/keramika/static/media/logo.84d4c05ab0753144aa1c.JPG",
     "index.html": "/keramika/index.html",
-    "main.07322e02.js.map": "/keramika/static/js/main.07322e02.js.map"
+    "main.908e19d0.js.map": "/keramika/static/js/main.908e19d0.js.map"
   },
   "entrypoints": [
-    "static/js/main.07322e02.js"
+    "static/js/main.908e19d0.js"
   ]
 }
