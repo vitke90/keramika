@@ -350,7 +350,7 @@ const ServicePage = () => {
         </div>
       )}
 
-      {/* --- LIGHTBOX (PHOTO MAXIMIZED) --- */}
+      {/* ---// redeploy LIGHTBOX (PHOTO MAXIMIZED) --- */}
       {selectedIndex !== null && (
         <div
           className="fixed inset-0 z-[120] flex items-center justify-center bg-black/95 backdrop-blur-xl touch-none"
