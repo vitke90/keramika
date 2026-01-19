@@ -1,20 +1,22 @@
 import React, { useState, useEffect } from 'react';
 import { X, ChevronLeft, ChevronRight, Globe, CheckCircle, MessageSquare, Maximize2, Menu, Phone, Share2 } from 'lucide-react';
-import photo1 from './photos/photo1.jpg'
-import photo2 from './photos/photo2.jpg'
-import photo3 from './photos/photo3.jpg'
-import photo4 from './photos/photo4.jpg'
-import photo5 from './photos/photo5.jpg'
-import photo6 from './photos/photo6.jpg'
-import photo7 from './photos/photo7.jpg'
-import photo8 from './photos/photo8.jpg'
-import photo9 from './photos/photo9.jpg'
-import photo10 from './photos/photo10.jpg'
-import photo11 from './photos/photo11.jpg'
-import photo12 from './photos/photo12.jpg'
-import photo13 from './photos/photo13.jpg'
-import photo14 from './photos/photo14.jpg'
-import photo15 from './photos/photo15.jpg'
+
+// Importi fotografija
+import photo1 from './photos/photo1.jpg';
+import photo2 from './photos/photo2.jpg';
+import photo3 from './photos/photo3.jpg';
+import photo4 from './photos/photo4.jpg';
+import photo5 from './photos/photo5.jpg';
+import photo6 from './photos/photo6.jpg';
+import photo7 from './photos/photo7.jpg';
+import photo8 from './photos/photo8.jpg';
+import photo9 from './photos/photo9.jpg';
+import photo10 from './photos/photo10.jpg';
+import photo11 from './photos/photo11.jpg';
+import photo12 from './photos/photo12.jpg';
+import photo13 from './photos/photo13.jpg';
+import photo14 from './photos/photo14.jpg';
+import photo15 from './photos/photo15.jpg';
 import logo from './photos/logo.JPG';
 
 const ServicePage = () => {
@@ -25,15 +27,17 @@ const ServicePage = () => {
   const [touchStart, setTouchStart] = useState(null);
   const [touchEnd, setTouchEnd] = useState(null);
 
-  // --- NEW: LOGIC FOR MOBILE BACK BUTTON ---
+  // --- FIX: LOGIKA ZA BACK TASTER (BEZ TREPERENJA) ---
   useEffect(() => {
-    // If a photo or full gallery is opened, push a state so 'back' has something to pop
-    if (selectedIndex !== null || isFullGalleryOpen || isMenuOpen) {
+    const isOverlayOpen = selectedIndex !== null || isFullGalleryOpen || isMenuOpen;
+    
+    if (isOverlayOpen) {
+      // Dodajemo stanje u istoriju samo kada je nešto otvoreno
       window.history.pushState({ popup: true }, "");
     }
 
-    const handlePopState = (e) => {
-      // If user presses back, close everything
+    const handlePopState = () => {
+      // Kada korisnik klikne 'back', zatvaramo sve slojeve
       setSelectedIndex(null);
       setIsFullGalleryOpen(false);
       setIsMenuOpen(false);
@@ -43,14 +47,13 @@ const ServicePage = () => {
     return () => window.removeEventListener('popstate', handlePopState);
   }, [selectedIndex, isFullGalleryOpen, isMenuOpen]);
 
-  // Function to close specifically when clicking X (to prevent history mess)
+  // Funkcija za zatvaranje putem X dugmeta (sinhronizovano sa istorijom)
   const closeAllPopups = () => {
     if (selectedIndex !== null || isFullGalleryOpen || isMenuOpen) {
-      window.history.back(); // This will trigger the popstate listener above
+      window.history.back();
     }
   };
 
-  // --- REST OF YOUR CONSTANTS ---
   const sectionTitleStyle = "text-4xl md:text-4xl font-extrabold tracking-tight text-gray-900 mb-6";
 
   const services = [
@@ -65,11 +68,11 @@ const ServicePage = () => {
   const galleryItems = [
     { id: 1, title: "Kupatilo", category: "Keramika", img: photo1 },
     { id: 2, title: "Instalacije", category: "Vodovod", img: photo2 },
-    { id: 3, title: "Kupatilo sa visokim stepenikom za tuš kapinu", category: "Keramika", img: photo3 },
+    { id: 3, title: "Kupatilo sa visokim stepenikom", category: "Keramika", img: photo3 },
     { id: 4, title: "Kuhinja", category: "Keramika", img: photo4 },
     { id: 5, title: "Kupatilo", category: "Keramika", img: photo5 },
     { id: 6, title: "Kupatilo", category: "Keramika", img: photo6 },
-    { id: 7, title: "Kupatilo sa niskim stepenikom za tuš kapinu", category: "Keramika", img: photo7 },
+    { id: 7, title: "Kupatilo sa niskim stepenikom", category: "Keramika", img: photo7 },
     { id: 8, title: "Kupatilo", category: "Keramika", img: photo8 },
     { id: 9, title: "Kuhinja", category: "Keramika", img: photo9 },
     { id: 10, title: "Kupatilo", category: "Keramika", img: photo10 },
@@ -80,10 +83,12 @@ const ServicePage = () => {
     { id: 15, title: "Kupatilo", category: "Keramika", img: photo15 },
   ];
 
+  // --- FIX: VIBER SHARE (BEZ BLINKANJA I PROBLEMA SA BACK DUGMETOM) ---
   const shareOnViber = () => {
     const url = window.location.href;
     const text = "Pogledajte usluge keramičara i vodoinstalatera u Beogradu:";
-    window.open(`viber://forward?text=${encodeURIComponent(text + " " + url)}`, '_blank');
+    // Koristimo direktan href umesto window.open za stabilniji prelaz
+    window.location.href = `viber://forward?text=${encodeURIComponent(text + " " + url)}`;
   };
 
   const scrollToSection = (e, id) => {
@@ -111,20 +116,17 @@ const ServicePage = () => {
     window.requestAnimationFrame(step);
   };
 
-  // Keyboard controls
   useEffect(() => {
     const handleKeyDown = (e) => {
+      if (e.key === 'Escape') closeAllPopups();
       if (selectedIndex !== null) {
         if (e.key === 'ArrowRight') nextImg();
         if (e.key === 'ArrowLeft') prevImg();
-        if (e.key === 'Escape') closeAllPopups();
-      } else if (isFullGalleryOpen || isMenuOpen) {
-        if (e.key === 'Escape') closeAllPopups();
       }
     };
     window.addEventListener('keydown', handleKeyDown);
     return () => window.removeEventListener('keydown', handleKeyDown);
-  }, [selectedIndex, isFullGalleryOpen, isMenuOpen]);
+  }, [selectedIndex]);
 
   const nextImg = (e) => {
     e?.stopPropagation();
@@ -136,35 +138,23 @@ const ServicePage = () => {
     setSelectedIndex((prev) => (prev - 1 + galleryItems.length) % galleryItems.length);
   };
 
-  const nextCarousel = () => {
-    setCarouselStart((prev) => (prev + 1) % galleryItems.length);
-  };
-
-  const prevCarousel = () => {
-    setCarouselStart((prev) => (prev - 1 + galleryItems.length) % galleryItems.length);
-  };
+  const nextCarousel = () => setCarouselStart((prev) => (prev + 1) % galleryItems.length);
+  const prevCarousel = () => setCarouselStart((prev) => (prev - 1 + galleryItems.length) % galleryItems.length);
 
   const handleTouchStart = (e) => {
     setTouchEnd(null);
     setTouchStart(e.targetTouches[0].clientX);
   };
 
-  const handleTouchMove = (e) => {
-    setTouchEnd(e.targetTouches[0].clientX);
-  };
+  const handleTouchMove = (e) => setTouchEnd(e.targetTouches[0].clientX);
 
   const handleTouchEnd = () => {
     if (!touchStart || !touchEnd) return;
     const distance = touchStart - touchEnd;
-    const isLeftSwipe = distance > 50;
-    const isRightSwipe = distance < -50;
-
-    if (isLeftSwipe) {
-      if (selectedIndex !== null) nextImg();
-      else nextCarousel();
-    } else if (isRightSwipe) {
-      if (selectedIndex !== null) prevImg();
-      else prevCarousel();
+    if (distance > 50) {
+      selectedIndex !== null ? nextImg() : nextCarousel();
+    } else if (distance < -50) {
+      selectedIndex !== null ? prevImg() : prevCarousel();
     }
   };
 
@@ -216,8 +206,8 @@ const ServicePage = () => {
               <a href="tel:0606160776" className="flex items-center gap-3 bg-blue-600 text-white p-5 rounded-2xl justify-center shadow-lg active:scale-95 transition-transform">
                 <Phone size={24} fill="currentColor" /> 060 6160776
               </a>
-              <button onClick={shareOnViber} className="flex items-center gap-3 bg-[#7360f2] text-white p-4 rounded-2xl justify-center shadow-lg active:scale-95 transition-transform font-bold text-sm">
-                <Share2 size={24} /> Podeli na Viber
+              <button onClick={shareOnViber} className="flex items-center gap-3 bg-[#7360f2] text-white p-3 rounded-2xl justify-center shadow-lg active:scale-95 transition-transform font-bold text-sm">
+                <Share2 size={20} /> Podeli na Viber
               </button>
             </div>
           </div>
@@ -233,7 +223,7 @@ const ServicePage = () => {
             Keramičar i vodoinstalater <br /><span className="text-blue-600">Beograd</span>
           </h1>
           <p className="text-xl text-gray-800 max-w-2xl mx-auto mb-10 font-bold drop-shadow-sm">
-            Renoviranje kupatila i kuhinja? Zapušena sudopera? Curenje ventila i zamena slavina? Brzo i efikasno izvođenje radova.
+            Renoviranje kupatila i kuhinja? Zapušena sudopera? Curenje ventila i zamena slavina? Brzo i efikasno.
           </p>
           <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
             <a href="tel:0606160776" className="w-full sm:w-auto flex items-center justify-center gap-2 bg-gray-900 text-white px-8 py-4 rounded-full font-bold hover:bg-gray-800 transition-all shadow-lg">
@@ -246,18 +236,18 @@ const ServicePage = () => {
         </div>
       </section>
 
-      {/* --- ABOUT SECTION --- */}
+      {/* O nama */}
       <section id="about" className="py-24 bg-white px-6 border-t border-gray-50">
         <div className="max-w-4xl mx-auto text-center">
           <h2 className={sectionTitleStyle}>O nama</h2>
           <div className="w-full max-w-md h-[1.5px] bg-gradient-to-r from-transparent via-blue-600 to-transparent mx-auto mb-10"></div>
           <p className="text-xl text-gray-600 leading-relaxed font-medium">
-            Ekipa sa iskustvom od preko 30 godina u poslovima keramike, vodovoda i izolacije. Vršimo radove na teritoriji grada Beograda.
+            Ekipa sa iskustvom od preko 30 godina u poslovima keramike, vodovoda i izolacije na teritoriji Beograda.
           </p>
         </div>
       </section>
 
-      {/* --- SERVICES SECTION --- */}
+      {/* Usluge */}
       <section id="services" className="pt-20 pb-32 bg-gray-50 px-6">
         <div className="max-w-6xl mx-auto text-center">
           <h2 className={sectionTitleStyle}>Naše usluge</h2>
@@ -276,16 +266,15 @@ const ServicePage = () => {
         </div>
       </section>
 
-      {/* --- GALLERY SECTION --- */}
+      {/* Galerija */}
       <section id="projects" className="pt-20 pb-32 px-0 max-w-full mx-auto overflow-hidden bg-white">
         <div className="text-center mb-16 px-6">
-          <h2 className={sectionTitleStyle}>Galerija radova</h2>
+          <h2 className={sectionTitleStyle}>Galerija</h2>
           <div className="w-full max-w-md h-[1.5px] bg-gradient-to-r from-transparent via-blue-600 to-transparent mx-auto mb-10"></div>
-          <p className="text-gray-500 text-lg font-medium">Prelistajte naše projekte. Kliknite na sliku za uvećan prikaz.</p>
         </div>
 
         <div className="relative group px-4 md:px-16">
-          <button onClick={prevCarousel} className="absolute left-2 md:left-6 top-1/2 -translate-y-1/2 z-40 bg-white/90 p-4 rounded-full shadow-2xl hover:bg-blue-600 hover:text-white transition-all duration-300 border border-gray-100">
+          <button onClick={prevCarousel} className="absolute left-2 md:left-6 top-1/2 -translate-y-1/2 z-40 bg-white/90 p-4 rounded-full shadow-2xl hover:bg-blue-600 hover:text-white transition-all border border-gray-100">
             <ChevronLeft size={32} />
           </button>
 
@@ -295,8 +284,8 @@ const ServicePage = () => {
               const item = galleryItems[itemIndex];
               return (
                 <div key={`carousel-${item.id}-${offset}`} className={`relative cursor-pointer overflow-hidden rounded-[2.5rem] bg-gray-100 aspect-[4/5] shadow-lg transition-all duration-500 transform ${offset === 0 ? 'w-full shrink-0' : 'hidden'} md:block md:w-1/4 md:shrink-0`} onClick={() => setSelectedIndex(itemIndex)}>
-                  <img src={item.img} alt={item.title} className="h-full w-full object-cover transition-transform duration-1000 hover:scale-110" />
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent flex flex-col justify-end p-8 opacity-100 md:opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                  <img src={item.img} alt={item.title} className="h-full w-full object-cover hover:scale-110 transition-transform duration-1000" />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent flex flex-col justify-end p-8 opacity-100 md:opacity-0 group-hover:opacity-100 transition-opacity">
                     <p className="text-blue-400 text-xs font-bold uppercase mb-1 tracking-widest">{item.category}</p>
                     <h4 className="text-white text-lg font-bold leading-tight">{item.title}</h4>
                   </div>
@@ -305,19 +294,13 @@ const ServicePage = () => {
             })}
           </div>
 
-          <button onClick={nextCarousel} className="absolute right-2 md:right-6 top-1/2 -translate-y-1/2 z-40 bg-white/90 p-4 rounded-full shadow-2xl hover:bg-blue-600 hover:text-white transition-all duration-300 border border-gray-100">
+          <button onClick={nextCarousel} className="absolute right-2 md:right-6 top-1/2 -translate-y-1/2 z-40 bg-white/90 p-4 rounded-full shadow-2xl hover:bg-blue-600 hover:text-white transition-all border border-gray-100">
             <ChevronRight size={32} />
           </button>
         </div>
 
-        <div className="flex justify-center gap-2 mt-8">
-          {galleryItems.map((_, i) => (
-            <div key={i} className={`h-1.5 transition-all duration-300 rounded-full ${carouselStart === i ? 'w-8 bg-blue-600' : 'w-2 bg-gray-200'}`} />
-          ))}
-        </div>
-
         <div className="flex justify-center mt-12">
-          <button onClick={() => setIsFullGalleryOpen(true)} className="group flex items-center gap-4 bg-gray-900 text-white px-10 py-5 rounded-full hover:bg-blue-600 transition-all duration-500 shadow-2xl">
+          <button onClick={() => setIsFullGalleryOpen(true)} className="group flex items-center gap-4 bg-gray-900 text-white px-10 py-5 rounded-full hover:bg-blue-600 transition-all shadow-2xl">
             <Maximize2 size={22} className="group-hover:rotate-90 transition-transform duration-700" />
             <span className="font-bold uppercase tracking-widest text-sm">Prikaži celu galeriju ({galleryItems.length})</span>
           </button>
@@ -350,7 +333,7 @@ const ServicePage = () => {
         </div>
       )}
 
-      {/* ---// redeploy LIGHTBOX (PHOTO MAXIMIZED) --- */}
+      {/* --- LIGHTBOX (PHOTO MAXIMIZED) --- */}
       {selectedIndex !== null && (
         <div
           className="fixed inset-0 z-[120] flex items-center justify-center bg-black/95 backdrop-blur-xl touch-none"
@@ -371,11 +354,7 @@ const ServicePage = () => {
           </button>
 
           <div className="w-full h-full flex items-center justify-center p-2 md:p-12" onClick={(e) => e.stopPropagation()}>
-            <img
-              src={galleryItems[selectedIndex].img}
-              className="max-h-full max-w-full object-contain shadow-2xl"
-              alt="Uvećan prikaz"
-            />
+            <img src={galleryItems[selectedIndex].img} className="max-h-full max-w-full object-contain shadow-2xl" alt="Uvećan prikaz" />
           </div>
         </div>
       )}
