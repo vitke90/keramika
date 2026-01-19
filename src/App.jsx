@@ -10,6 +10,11 @@ import photo7 from './photos/photo7.jpg'
 import photo8 from './photos/photo8.jpg'
 import photo9 from './photos/photo9.jpg'
 import photo10 from './photos/photo10.jpg'
+import photo11 from './photos/photo11.jpg'
+import photo12 from './photos/photo12.jpg'
+import photo13 from './photos/photo13.jpg'
+import photo14 from './photos/photo14.jpg'
+import photo15 from './photos/photo15.jpg'
 import logo from './photos/logo.JPG';
 
 const ServicePage = () => {
@@ -42,6 +47,11 @@ const ServicePage = () => {
     { id: 8, title: "Kupatilo", category: "Keramika", img: photo8 },
     { id: 9, title: "Kuhinja", category: "Keramika", img: photo9 },
     { id: 10, title: "Kupatilo", category: "Keramika", img: photo10 },
+    { id: 11, title: "Kupatilo", category: "Keramika", img: photo11 },
+    { id: 12, title: "Kupatilo", category: "Keramika", img: photo12 },
+    { id: 13, title: "Kuhinja", category: "Keramika", img: photo13 },
+    { id: 14, title: "Sto", category: "Keramika", img: photo14 },
+    { id: 11, title: "Kupatilo", category: "Keramika", img: photo15 },
   ];
 
   const scrollToSection = (e, id) => {
@@ -169,7 +179,7 @@ const ServicePage = () => {
             <a href="#about" onClick={(e) => scrollToSection(e, 'about')} className="text-gray-900 hover:text-blue-600 transition-colors">O nama</a>
             <a href="#services" onClick={(e) => scrollToSection(e, 'services')} className="text-gray-900 hover:text-blue-600 transition-colors">Usluge</a>
             <a href="#projects" onClick={(e) => scrollToSection(e, 'projects')} className="text-gray-900 hover:text-blue-600 transition-colors">Galerija</a>
-            
+
             <a href="tel:0606160776" className="mt-6 flex items-center gap-3 bg-blue-600 text-white p-5 rounded-2xl justify-center shadow-lg active:scale-95 transition-transform">
               <Phone size={24} fill="currentColor" /> 060 6160776
             </a>
@@ -305,8 +315,8 @@ const ServicePage = () => {
 
       {/* --- LIGHTBOX (SAMO SLIKA) --- */}
       {selectedIndex !== null && (
-        <div 
-          className="fixed inset-0 z-[120] flex items-center justify-center bg-black/95 backdrop-blur-xl touch-none" 
+        <div
+          className="fixed inset-0 z-[120] flex items-center justify-center bg-black/95 backdrop-blur-xl touch-none"
           onClick={() => setSelectedIndex(null)}
           onTouchStart={handleTouchStart}
           onTouchMove={handleTouchMove}
@@ -324,10 +334,10 @@ const ServicePage = () => {
           </button>
 
           <div className="w-full h-full flex items-center justify-center p-2 md:p-12" onClick={(e) => e.stopPropagation()}>
-            <img 
-              src={galleryItems[selectedIndex].img} 
-              className="max-h-full max-w-full object-contain shadow-2xl" 
-              alt="Uvećan prikaz" 
+            <img
+              src={galleryItems[selectedIndex].img}
+              className="max-h-full max-w-full object-contain shadow-2xl"
+              alt="Uvećan prikaz"
             />
           </div>
         </div>
