@@ -25,6 +25,32 @@ const ServicePage = () => {
   const [touchStart, setTouchStart] = useState(null);
   const [touchEnd, setTouchEnd] = useState(null);
 
+  // --- NEW: LOGIC FOR MOBILE BACK BUTTON ---
+  useEffect(() => {
+    // If a photo or full gallery is opened, push a state so 'back' has something to pop
+    if (selectedIndex !== null || isFullGalleryOpen || isMenuOpen) {
+      window.history.pushState({ popup: true }, "");
+    }
+
+    const handlePopState = (e) => {
+      // If user presses back, close everything
+      setSelectedIndex(null);
+      setIsFullGalleryOpen(false);
+      setIsMenuOpen(false);
+    };
+
+    window.addEventListener('popstate', handlePopState);
+    return () => window.removeEventListener('popstate', handlePopState);
+  }, [selectedIndex, isFullGalleryOpen, isMenuOpen]);
+
+  // Function to close specifically when clicking X (to prevent history mess)
+  const closeAllPopups = () => {
+    if (selectedIndex !== null || isFullGalleryOpen || isMenuOpen) {
+      window.history.back(); // This will trigger the popstate listener above
+    }
+  };
+
+  // --- REST OF YOUR CONSTANTS ---
   const sectionTitleStyle = "text-4xl md:text-4xl font-extrabold tracking-tight text-gray-900 mb-6";
 
   const services = [
@@ -85,20 +111,20 @@ const ServicePage = () => {
     window.requestAnimationFrame(step);
   };
 
+  // Keyboard controls
   useEffect(() => {
     const handleKeyDown = (e) => {
       if (selectedIndex !== null) {
         if (e.key === 'ArrowRight') nextImg();
         if (e.key === 'ArrowLeft') prevImg();
-        if (e.key === 'Escape') setSelectedIndex(null);
-      } else if (isFullGalleryOpen) {
-        if (e.key === 'Escape') setIsFullGalleryOpen(false);
+        if (e.key === 'Escape') closeAllPopups();
+      } else if (isFullGalleryOpen || isMenuOpen) {
+        if (e.key === 'Escape') closeAllPopups();
       }
-      if (e.key === 'Escape') setIsMenuOpen(false);
     };
     window.addEventListener('keydown', handleKeyDown);
     return () => window.removeEventListener('keydown', handleKeyDown);
-  }, [selectedIndex, isFullGalleryOpen]);
+  }, [selectedIndex, isFullGalleryOpen, isMenuOpen]);
 
   const nextImg = (e) => {
     e?.stopPropagation();
@@ -174,10 +200,10 @@ const ServicePage = () => {
 
       {/* --- MOBILE SIDEBAR --- */}
       <div className={`fixed inset-0 z-[100] ${isMenuOpen ? 'visible' : 'invisible'}`}>
-        <div className={`absolute inset-0 bg-black/40 backdrop-blur-sm transition-opacity duration-300 ${isMenuOpen ? 'opacity-100' : 'opacity-0'}`} onClick={() => setIsMenuOpen(false)} />
+        <div className={`absolute inset-0 bg-black/40 backdrop-blur-sm transition-opacity duration-300 ${isMenuOpen ? 'opacity-100' : 'opacity-0'}`} onClick={closeAllPopups} />
         <div className={`absolute right-0 top-0 h-full w-[85%] max-w-sm bg-white shadow-2xl transition-transform duration-300 ease-out p-8 flex flex-col ${isMenuOpen ? 'translate-x-0' : 'translate-x-full'}`}>
           <div className="flex justify-end items-center mb-12">
-            <button onClick={() => setIsMenuOpen(false)} className="p-2 text-gray-500 hover:text-black">
+            <button onClick={closeAllPopups} className="p-2 text-gray-500 hover:text-black">
               <X size={32} />
             </button>
           </div>
@@ -190,7 +216,7 @@ const ServicePage = () => {
               <a href="tel:0606160776" className="flex items-center gap-3 bg-blue-600 text-white p-5 rounded-2xl justify-center shadow-lg active:scale-95 transition-transform">
                 <Phone size={24} fill="currentColor" /> 060 6160776
               </a>
-              <button onClick={shareOnViber} className="flex items-center gap-3 bg-[#7360f2] text-white p-5 rounded-2xl justify-center shadow-lg active:scale-95 transition-transform font-bold">
+              <button onClick={shareOnViber} className="flex items-center gap-3 bg-[#7360f2] text-white p-4 rounded-2xl justify-center shadow-lg active:scale-95 transition-transform font-bold text-sm">
                 <Share2 size={24} /> Podeli na Viber
               </button>
             </div>
@@ -307,7 +333,7 @@ const ServicePage = () => {
                 <h2 className="text-3xl font-bold text-gray-900 tracking-tight">Svi Radovi</h2>
                 <p className="text-gray-500 font-medium">{galleryItems.length} fotografija</p>
               </div>
-              <button onClick={() => setIsFullGalleryOpen(false)} className="p-4 bg-gray-100 hover:bg-red-50 hover:text-red-600 rounded-full transition-all">
+              <button onClick={closeAllPopups} className="p-4 bg-gray-100 hover:bg-red-50 hover:text-red-600 rounded-full transition-all">
                 <X size={32} />
               </button>
             </div>
@@ -324,16 +350,16 @@ const ServicePage = () => {
         </div>
       )}
 
-      {/* --- LIGHTBOX --- */}
+      {/* --- LIGHTBOX (PHOTO MAXIMIZED) --- */}
       {selectedIndex !== null && (
         <div
           className="fixed inset-0 z-[120] flex items-center justify-center bg-black/95 backdrop-blur-xl touch-none"
-          onClick={() => setSelectedIndex(null)}
+          onClick={closeAllPopups}
           onTouchStart={handleTouchStart}
           onTouchMove={handleTouchMove}
           onTouchEnd={handleTouchEnd}
         >
-          <button className="absolute top-6 right-6 text-white/50 hover:text-white z-[130]" onClick={() => setSelectedIndex(null)}>
+          <button className="absolute top-6 right-6 text-white/50 hover:text-white z-[130]" onClick={closeAllPopups}>
             <X size={40} />
           </button>
 
