@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { X, ChevronLeft, ChevronRight, Globe, CheckCircle, MessageSquare, Maximize2, Menu, Phone } from 'lucide-react';
+import { X, ChevronLeft, ChevronRight, Globe, CheckCircle, MessageSquare, Maximize2, Menu, Phone, Share2 } from 'lucide-react';
 import photo1 from './photos/photo1.jpg'
 import photo2 from './photos/photo2.jpg'
 import photo3 from './photos/photo3.jpg'
@@ -51,8 +51,14 @@ const ServicePage = () => {
     { id: 12, title: "Kupatilo", category: "Keramika", img: photo12 },
     { id: 13, title: "Kuhinja", category: "Keramika", img: photo13 },
     { id: 14, title: "Sto", category: "Keramika", img: photo14 },
-    { id: 11, title: "Kupatilo", category: "Keramika", img: photo15 },
+    { id: 15, title: "Kupatilo", category: "Keramika", img: photo15 },
   ];
+
+  const shareOnViber = () => {
+    const url = window.location.href;
+    const text = "Pogledajte usluge keramičara i vodoinstalatera u Beogradu:";
+    window.open(`viber://forward?text=${encodeURIComponent(text + " " + url)}`, '_blank');
+  };
 
   const scrollToSection = (e, id) => {
     e.preventDefault();
@@ -166,7 +172,7 @@ const ServicePage = () => {
         </div>
       </nav>
 
-      {/* --- MOBILE SIDEBAR (IZMENJEN: Centrirano bez strelica) --- */}
+      {/* --- MOBILE SIDEBAR --- */}
       <div className={`fixed inset-0 z-[100] ${isMenuOpen ? 'visible' : 'invisible'}`}>
         <div className={`absolute inset-0 bg-black/40 backdrop-blur-sm transition-opacity duration-300 ${isMenuOpen ? 'opacity-100' : 'opacity-0'}`} onClick={() => setIsMenuOpen(false)} />
         <div className={`absolute right-0 top-0 h-full w-[85%] max-w-sm bg-white shadow-2xl transition-transform duration-300 ease-out p-8 flex flex-col ${isMenuOpen ? 'translate-x-0' : 'translate-x-full'}`}>
@@ -180,9 +186,14 @@ const ServicePage = () => {
             <a href="#services" onClick={(e) => scrollToSection(e, 'services')} className="text-gray-900 hover:text-blue-600 transition-colors">Usluge</a>
             <a href="#projects" onClick={(e) => scrollToSection(e, 'projects')} className="text-gray-900 hover:text-blue-600 transition-colors">Galerija</a>
 
-            <a href="tel:0606160776" className="mt-6 flex items-center gap-3 bg-blue-600 text-white p-5 rounded-2xl justify-center shadow-lg active:scale-95 transition-transform">
-              <Phone size={24} fill="currentColor" /> 060 6160776
-            </a>
+            <div className="mt-6 flex flex-col gap-4">
+              <a href="tel:0606160776" className="flex items-center gap-3 bg-blue-600 text-white p-5 rounded-2xl justify-center shadow-lg active:scale-95 transition-transform">
+                <Phone size={24} fill="currentColor" /> 060 6160776
+              </a>
+              <button onClick={shareOnViber} className="flex items-center gap-3 bg-[#7360f2] text-white p-5 rounded-2xl justify-center shadow-lg active:scale-95 transition-transform font-bold">
+                <Share2 size={24} /> Podeli na Viber
+              </button>
+            </div>
           </div>
         </div>
       </div>
@@ -313,7 +324,7 @@ const ServicePage = () => {
         </div>
       )}
 
-      {/* --- LIGHTBOX (SAMO SLIKA) --- */}
+      {/* --- LIGHTBOX --- */}
       {selectedIndex !== null && (
         <div
           className="fixed inset-0 z-[120] flex items-center justify-center bg-black/95 backdrop-blur-xl touch-none"
@@ -342,6 +353,15 @@ const ServicePage = () => {
           </div>
         </div>
       )}
+
+      {/* --- VIBER FLOATING SHARE BUTTON --- */}
+      <button 
+        onClick={shareOnViber}
+        className="fixed bottom-6 right-6 z-[90] bg-[#7360f2] text-white p-4 rounded-full shadow-2xl hover:scale-110 active:scale-95 transition-all md:bottom-10 md:right-10"
+        title="Podeli na Viberu"
+      >
+        <Share2 size={28} />
+      </button>
 
       <footer className="py-20 border-t border-gray-100 text-center">
         <p className="text-gray-400 font-medium">© 2026 Keramičar Beograd. All rights reserved.</p>
